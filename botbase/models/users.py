@@ -6,3 +6,5 @@ class User(db.Model):
     username = db.Column(db.String(64), index=True, unique=True)
     email = db.Column(db.String(120), index=True, unique=True)
     
+    def __repr__(self):
+        return '<username:{}>'.format(self.username)
