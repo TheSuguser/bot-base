@@ -14,4 +14,6 @@ dist/
 build/
 *.egg-info/
 
+.vscode/
+
 *.cpython-37.pyc
