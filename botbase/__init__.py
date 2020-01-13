@@ -17,7 +17,10 @@ def create_app(config=None):
             app.config.update(config)
         elif config.endswith('.py'):
             app.config.from_pyfile(config)
-    from . import models, routes
+    
+    from botbase import routes
     routes.init_app(app)
+    from botbase import models
+    models.init_app(app)
     return app
 
