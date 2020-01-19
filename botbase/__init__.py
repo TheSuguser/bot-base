@@ -2,10 +2,17 @@ import os
 
 from flask import Flask
 
+from botbase.extensions import db
+
 
 def create_app(config=None):
     app = Flask(__name__)
-    # load default configuration
+
+    register_logging(app)
+    register_extension(app)
+
+
+def register_logging(app):
     app.config.from_object('botbase.settings')
     # load environment configuration
     if 'FLASK_CONF' in os.environ:
@@ -17,10 +24,9 @@ def create_app(config=None):
             app.config.update(config)
         elif config.endswith('.py'):
             app.config.from_pyfile(config)
-    
-    from botbase import routes
-    routes.init_app(app)
-    from botbase import models
-    models.init_app(app)
-    return app
 
+def register_blueprints(app):
+    pass
+
+def register_extension(app):
+    db.init_app(app)
