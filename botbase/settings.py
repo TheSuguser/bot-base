@@ -1,5 +1,5 @@
 import os
-BASE_DIR = __file__
+BASE_DIR = os.path.abspath('')
 
 # 调试信息
 DEBUG = True

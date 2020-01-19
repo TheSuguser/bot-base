@@ -15,14 +15,23 @@ class User(db.Model):
         self.password_hash = generate_password_hash(password)
     
     def validate_password(self, password):
-        return check_password_hash(password)
-    
+        return check_password_hash(self.password_hash, password)
     
     def __repr__(self):
         return '<username:{}>'.format(self.username)
 
 class Admin(db.Model, UserMixin):
+    __tablename__ = 'admin'
+    id = db.Column(db.Integer, primary_key=True)
+    username = db.Column(db.String(120), index=True, unique=True)
+    password_hash = db.Column(db.String(128))
 
+    def set_password(self, password):
+        self.password_hash = generate_password_hash(password)
+    
+    def validate_password(self, password):
+        return check_password_hash(self.password_hash, password)
+    
 class BotObject(db.Model):
     __tablename__ = 'botobject'
     id = db.Column(db.Integer, primary_key=True)
@@ -34,7 +43,7 @@ class QASet(db.Model):
     __tablename__ = 'qaset'
     id = db.Column(db.Integer, primary_key=True)
     question = db.Column(db.String(128), unique=True)
-    answer = db.Column(db.text())
+    db.Column(db.Text)
     topic = db.Column(db.String(50))
 
     #定义外键

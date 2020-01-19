@@ -5,3 +5,9 @@ from flask_login import LoginManager
 db = SQLAlchemy()
 bootstrap = Bootstrap()
 login_manager = LoginManager()
+
+@login_manager.user_loader
+def load_user(user_id):
+    from botbase.models import Admin
+    user = Admin.query.get(int(user_id))
+    return user
