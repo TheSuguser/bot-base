@@ -1,12 +1,14 @@
 import os
 
+import click
+
 from flask import Flask
 from flask import redirect, url_for
 
 from botbase.blueprints.auth import auth_bp
 from botbase.blueprints.front import front_bp
 from botbase.blueprints.admin import admin_bp
-from botbase.extensions import db, bootstrap
+from botbase.extensions import db, bootstrap, login_manager
 
 
 def create_app(config=None):
@@ -44,4 +46,9 @@ def register_blueprints(app):
 def register_extension(app):
     db.init_app(app)
     bootstrap.init_app(app)
+    login_manager.init_app(app)
 
+
+# 创建管理员帐号
+def register_commands(app):
+    @app.cli.command()

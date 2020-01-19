@@ -1,3 +1,6 @@
+import os
+BASE_DIR = __file__
+
 # 调试信息
 DEBUG = True
 PORT = 5003

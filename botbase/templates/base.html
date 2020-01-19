@@ -10,7 +10,49 @@
             D.Bot
         </title>
         <link rel="icon" href="{{url_for('static', filename='favicon.ico')}}">
-        <link rel="stylesheet" href="{{ url_for('static', filename='vendor/bootstrap-3.3.7-dist/css/bootstrap.min.css') }}">
+        <link rel="stylesheet" href="{{ url_for('static', filename='vendor/bootstrap/css/bootstrap.min.css') }}">
+        <script src="{{url_for('static', filename='vendor/bootstrap/js/bootstrap.min.js')}}"></script>
         {% endblock head %}
     </head>
+    <body>
+        {% block navbar%}
+        <nav class="navbar navbar-expand-lg navbar-light" style="background-color: #eaf4ec;">
+            <a class="navbar-brand" href="/">D.Bot</a>
+            <div class="collapse navbar-collapse" id="collapsibleNavId">
+                <ul class="navbar-nav ml-auto mt-2 mt-lg-0">
+                    <li class="nav-item">
+                        <a class="nav-link" href="{{url_for('auth.login')}}">登录</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/">申请试用</a>
+                    </li>
+                </ul>
+                
+                </nav>
+            </div>
+        </nav>       
+        {% endblock navbar %}
+
+        <main>
+            <div class="container">
+                {% block content %}
+                {% endblock content %}
+                {% block footer %}
+                <footer>
+                    <p class="float-left">
+                        <small>&copy; 2020
+                            <a href="/" title="Written by Joe Zheng">DAI</a> -
+                            <a href="/" title="A HelloFlask project">D.Bot</a>
+                        </small>
+                    </p>
+                    <p class="float-right">
+                        <small>Deploy ChatBot Smoothly</small>
+                    </p>
+                </footer>
+                {% endblock footer%}                
+            </div>
+        </main>
+
+
+    </body>
 </html>
