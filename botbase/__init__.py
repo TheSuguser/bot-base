@@ -9,7 +9,7 @@ from botbase.blueprints.auth import auth_bp
 from botbase.blueprints.front import front_bp
 from botbase.blueprints.admin import admin_bp
 from botbase.extensions import db, bootstrap, login_manager
-from botbase.models import Admin
+from botbase.models import Admin, Role
 
 
 def create_app(config=None):
@@ -86,6 +86,13 @@ def register_commands(app):
             )
             admin.set_password(password)
             db.session.add(admin)
+        db.session.commit()
+        click.echo('Done.')
+
+        """initial roles and permissions"""
+        click.echo('Initializing the roles and permissions...')
+        Role.init_role()
+        click.echo('Done.')
 
         # category = Category.query.first()
         # if category is None:
@@ -93,5 +100,4 @@ def register_commands(app):
         #     category = Category(name='Default')
         #     db.session.add(category)
 
-        db.session.commit()
-        click.echo('Done.')
+        
