@@ -17,3 +17,5 @@ SQLALCHEMY_TRACK_MODIFICATIONS = False
 
 # 上传设置
 MAXN_CONTENT_LENGTH = 10 * 1024 * 1024
+
+ADMIN_EMAIL = ["joezheng@deloitte.com.cn"]

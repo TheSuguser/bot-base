@@ -16,7 +16,8 @@ class TrialForm(FlaskForm):
     submit = SubmitField('申请')
 
 class RegisterForm(FlaskForm):
+    email = StringField('邮箱', validators=[DataRequired(message="Please input email"), Email(message="请输入合法的邮箱地址")])
     username = StringField('用户名', validators=[DataRequired(message="Please input username")])
     password = PasswordField('密码', validators=[DataRequired(message="Please input password")])
-    password_conf = PasswordField('请再次确认密码', validators=[DataRequired(message="Please input password"), EqualTo(password)])
+    password_conf = PasswordField('请再次确认密码', validators=[DataRequired(message="Please input password"), EqualTo("password")])
     submit = SubmitField('注册')
