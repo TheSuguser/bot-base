@@ -21,13 +21,13 @@ def login():
 
         if user is not None and user.validate_password(password):
             login_user(user, remember)
+            # print(current_user.is_admin)
             flash('welcome back', 'info')
-            return redirect(url_for('front.index'))
+            return redirect(url_for('front.panel'))
         else:
             flash('无效的账户或密码', 'warning')
             return redirect(url_for('auth.login'))
     return render_template('auth/login.html', form=form)
-    
 
 @auth_bp.route('/logout')
 def logout():

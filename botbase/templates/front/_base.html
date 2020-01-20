@@ -1,0 +1,23 @@
+{% extends 'base.html' %}
+
+{% block memu %}
+<nav class="navbar navbar-expand-lg navbar-light" style="background-color: #eaf4ec;">
+    <div class="collapse navbar-collapse" id="collapsibleNavId">
+        <ul class="navbar-nav mr-auto mt-2 mt-lg-0">
+            <li class="nav-item">
+                <a class="nav-link" href="#">项目列表</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="#">帮助教程</a>
+            </li>
+            {% if current_user.is_admin %}
+            <li class="nav-item">
+                <a class="nav-link" href="{{url_for('admin.register')}}">用户管理</a>
+            </li>
+            {%endif%}
+        </ul>
+        
+        </nav>
+    </div>
+</nav>       
+{% endblock memu%}

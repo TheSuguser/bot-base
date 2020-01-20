@@ -3,13 +3,13 @@ import os
 import click
 
 from flask import Flask
-from flask import redirect, url_for
+from flask import redirect, url_for, render_template
 
 from botbase.blueprints.auth import auth_bp
 from botbase.blueprints.front import front_bp
 from botbase.blueprints.admin import admin_bp
 from botbase.extensions import db, bootstrap, login_manager
-from botbase.models import User, Role, Admin
+from botbase.models import User, Role
 
 
 def create_app(config=None):
@@ -30,6 +30,7 @@ def create_app(config=None):
     
     register_extension(app)
     register_blueprints(app)
+    register_errorhandlers(app)
     register_commands(app)
 
     return app
@@ -50,6 +51,15 @@ def register_extension(app):
     bootstrap.init_app(app)
     login_manager.init_app(app)
 
+def register_errorhandlers(app):
+    # 404
+    @app.errorhandler(404)
+    def page_not_found(e):
+        return render_template('errors/404.html'), 404
+    
+    @app.errorhandler(403)
+    def forbidden(e):
+        return render_template('errors/403.html'), 403
 
 # 创建管理员帐号
 def register_commands(app):
