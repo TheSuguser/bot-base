@@ -3,7 +3,34 @@
 {% block title %}项目面板{% endblock %}
 
 {% block content %}
-<h1>
-    This Panel
-</h1>
+<div class="container">
+    <div class="card-columns">
+        {% if projects %}
+        {% for project in projects %}
+            <div class="card">
+                <img class="card-img-top" src="holder.js/100x180/" alt="">
+                <div class="card-body">
+                    <h4 class="card-title">{{project.name}}</h4>
+                    <p class="card-text">{{project.area}}</p>
+                </div>
+                <form class="inline" method="POST" action="{{url_for('front.delete_project', project_id=project.id)}}">
+                    <input type="hidden" name="csrf_token" value="{{ csrf_token()}}"/>
+                    <button type="submit" class="btn btn-danger btn-sm" onclick="return confirm('确定删除该项目？（删除后所有数据将会清空）')">Delete</button>
+                </form> 
+            </div>
+        {% endfor %}
+        {% endif %}
+        <div class="card" >
+            <img class="card-img-top" src="holder.js/100x180/" alt="">
+            <div class="card-body">
+                <a href="{{url_for('front.create_project')}}">
+                    <h4 class="card-title" href="{{url_for('front.create_project')}}">+</h4>
+                    <p class="card-text">新建项目</p> 
+                </a>
+                
+            </div>
+        </div>
+    </div>    
+</div>
+
 {% endblock content%}
