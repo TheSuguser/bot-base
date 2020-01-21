@@ -1,10 +1,12 @@
 from flask_sqlalchemy import SQLAlchemy
 from flask_bootstrap import Bootstrap
+from flask_wtf import CSRFProtect
 from flask_login import LoginManager, AnonymousUserMixin
 
 db = SQLAlchemy()
 bootstrap = Bootstrap()
 login_manager = LoginManager()
+csrf = CSRFProtect()
 
 class Guest(AnonymousUserMixin):
     @property

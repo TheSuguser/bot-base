@@ -8,7 +8,7 @@ from flask import redirect, url_for, render_template
 from botbase.blueprints.auth import auth_bp
 from botbase.blueprints.front import front_bp
 from botbase.blueprints.admin import admin_bp
-from botbase.extensions import db, bootstrap, login_manager
+from botbase.extensions import db, bootstrap, login_manager, csrf
 from botbase.models import User, Role
 
 
@@ -50,6 +50,7 @@ def register_extension(app):
     db.init_app(app)
     bootstrap.init_app(app)
     login_manager.init_app(app)
+    csrf.init_app(app)
 
 def register_errorhandlers(app):
     # 404
