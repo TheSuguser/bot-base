@@ -21,3 +21,8 @@ class RegisterForm(FlaskForm):
     password = PasswordField('密码', validators=[DataRequired(message="Please input password")])
     password_conf = PasswordField('请再次确认密码', validators=[DataRequired(message="Please input password"), EqualTo("password")])
     submit = SubmitField('注册')
+
+class ProjectForm(FlaskForm):
+    name = StringField('项目名称', validators=[DataRequired(message="Please input name")])
+    area = StringField('应用场景(Optional)', default='')
+    submit = SubmitField('创建项目')

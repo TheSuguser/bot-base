@@ -108,3 +108,12 @@ class QASet(db.Model):
 
     #定义外键
     chatbot_id = db.Column(db.Integer, db.ForeignKey('botobject.id'))
+
+
+class Project(db.Model):
+    __tablename__ = 'project'
+    id = db.Column(db.Integer, primary_key=True)
+    name = db.Column(db.String(30), index=True)
+    area = db.Column(db.String(200), default='')
+    create_time = db.Column(db.DateTime, default=datetime.utcnow, index=True)
+    user_id = db.Column(db.Integer, db.ForeignKey('user.id'))
