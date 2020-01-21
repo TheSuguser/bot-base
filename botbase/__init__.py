@@ -8,6 +8,7 @@ from flask import redirect, url_for, render_template
 from botbase.blueprints.auth import auth_bp
 from botbase.blueprints.front import front_bp
 from botbase.blueprints.admin import admin_bp
+from botbase.blueprints.project import project_bp
 from botbase.extensions import db, bootstrap, login_manager, csrf
 from botbase.models import User, Role
 
@@ -40,6 +41,7 @@ def register_blueprints(app):
     app.register_blueprint(front_bp)
     app.register_blueprint(admin_bp, url_prefix='/admin')
     app.register_blueprint(auth_bp, url_prefix='/auth')
+    app.register_blueprint(project_bp, url_prefix='/project')
 
     # 临时代码 从主页跳转到login
     # @app.route('/')

@@ -117,3 +117,12 @@ class Project(db.Model):
     area = db.Column(db.String(200), default='')
     create_time = db.Column(db.DateTime, default=datetime.utcnow, index=True)
     user_id = db.Column(db.Integer, db.ForeignKey('user.id'))
+
+    def match(self, project_id, user_id):
+        _project = Project.query.filter_by(id=project_id).first()
+        return _project.user_id == user_id
+
+
+class ChatBot(db.Model):
+    __tablename__ = 'chatbot'
+    id = db.Column(db.Integer, primary_key=True)
