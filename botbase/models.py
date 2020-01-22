@@ -6,7 +6,6 @@ from werkzeug.security import generate_password_hash, check_password_hash
 
 from botbase.extensions import db
 
-
 # 角色与权限模型
 # relationship table
 roles_permissions = db.Table(
@@ -58,7 +57,7 @@ class User(db.Model, UserMixin):
     password_hash = db.Column(db.String(128))
 
     # 定义关系
-    bots = db.relationship('BotObject')
+    # bots = db.relationship('BotObject')
 
     # 定义权限
     role_id = db.Column(db.Integer, db.ForeignKey('role.id'))
@@ -92,22 +91,22 @@ class User(db.Model, UserMixin):
     
     def __repr__(self):
         return '<username:{}>'.format(self.username)    
-class BotObject(db.Model):
-    __tablename__ = 'botobject'
-    id = db.Column(db.Integer, primary_key=True)
-    chatbot_id = db.Column(db.String(120), unique=True)
-    # 定义外键
-    user = db.Column(db.Integer, db.ForeignKey('user.id'))
+# class BotObject(db.Model):
+#     __tablename__ = 'botobject'
+#     id = db.Column(db.Integer, primary_key=True)
+#     chatbot_id = db.Column(db.String(120), unique=True)
+#     # 定义外键
+#     user = db.Column(db.Integer, db.ForeignKey('user.id'))
 
-class QASet(db.Model):
-    __tablename__ = 'qaset'
-    id = db.Column(db.Integer, primary_key=True)
-    question = db.Column(db.String(128), unique=True)
-    db.Column(db.Text)
-    topic = db.Column(db.String(50))
+# class QASet(db.Model):
+#     __tablename__ = 'qaset'
+#     id = db.Column(db.Integer, primary_key=True)
+#     question = db.Column(db.String(128), unique=True)
+#     db.Column(db.Text)
+#     topic = db.Column(db.String(50))
 
-    #定义外键
-    chatbot_id = db.Column(db.Integer, db.ForeignKey('botobject.id'))
+#     #定义外键
+#     chatbot_id = db.Column(db.Integer, db.ForeignKey('botobject.id'))
 
 
 class Project(db.Model):
@@ -123,6 +122,11 @@ class Project(db.Model):
         return _project.user_id == user_id
 
 
-class ChatBot(db.Model):
+class Bot(db.Model):
     __tablename__ = 'chatbot'
     id = db.Column(db.Integer, primary_key=True)
+    name = db.Column(db.String(30), primary_key=True)
+    lang = db.Column(db.Integer)
+    bot_type = db.Column(db.Integer)
+    project_id = db.Column(db.Integer, db.ForeignKey('project.id'))
+    user_id = db.Column(db.Integer, db.ForeignKey('user.id'))

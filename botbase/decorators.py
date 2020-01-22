@@ -48,12 +48,11 @@ def confirm_required(func):
         return func(*args, **kwargs)
     return decorated_function
 
-def only_onwer_can(func):
+def only_owner_can(func):
     @wraps(func)
     def decorated_function(*args, **kwargs):
-        print(kwargs)
+        #print(kwargs)
         if not Project().match(project_id=kwargs.get("project_id"), user_id=current_user.id):
-            abort(403)
-        
+            abort(403)   
         return func(*args, **kwargs)
     return decorated_function
