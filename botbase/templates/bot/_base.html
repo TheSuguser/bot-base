@@ -1,0 +1,21 @@
+{% extends 'base.html' %}
+
+{% block memu %}
+<nav class="navbar navbar-expand-lg navbar-light" style="background-color: #eaf4ec;">
+    <div class="collapse navbar-collapse" id="collapsibleNavId">
+        <ul class="navbar-nav mr-auto mt-2 mt-lg-0">
+            <li class="nav-item">
+                <a class="nav-link" href="{{url_for('project.index', project_id=project_id)}}">返回项目列表</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="#">问答集管理</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="#">Dashboard</a>
+            </li>
+        </ul>
+        
+        </nav>
+    </div>
+</nav>           
+{% endblock memu%}

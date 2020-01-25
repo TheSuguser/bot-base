@@ -3,27 +3,27 @@
 {% block content %}
 <div class="container">
     <div class="card-columns">
-        <!-- {% if bots %}
+        {% if bots %}
         {% for bot in bots %}
             <div class="card">
                 <img class="card-img-top" src="holder.js/100x180/" alt="">
                 <div class="card-body">
-                    <a href="{{url_for('bot.index', bot_id=bot.id)}}">
+                    <a href="{{url_for('bot.index', project_id=project_id, bot_id=bot.id)}}">
                         <h4 class="card-title">{{bot.name}}</h4>
                         <p class="card-text">{{bot.area}}</p>                        
                     </a>
                 </div>
-                <form class="inline" method="POST" action="{{url_for('front.delete_bot', bot_id=bot.id)}}">
+                <form class="inline" method="POST" action="{{url_for('project.delete_bot',project_id=project_id,bot_id=bot.id)}}">
                     <input type="hidden" name="csrf_token" value="{{ csrf_token()}}"/>
-                    <button type="submit" class="btn btn-danger btn-sm" onclick="return confirm('确定删除该项目？（删除后所有数据将会清空）')">Delete</button>
+                    <button type="submit" class="btn btn-danger btn-sm" onclick="return confirm('确定删除该Bot？（删除后所有数据将会清空）')">Delete</button>
                 </form> 
             </div>
         {% endfor %}
-        {% endif %} -->
+        {% endif %}
         <div class="card" >
             <img class="card-img-top" src="holder.js/100x180/" alt="">
             <div class="card-body">
-                <a  href="{{url_for('project.create_bot',project_id=project_id)}}>
+                <a  href="{{url_for('project.create_bot',project_id=project_id)}}"">
                     <h4 class="card-title">+</h4>
                     <p class="card-text">新建chatbot</p> 
                 </a>

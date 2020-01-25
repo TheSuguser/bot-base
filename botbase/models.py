@@ -125,7 +125,7 @@ class Project(db.Model):
 class Bot(db.Model):
     __tablename__ = 'chatbot'
     id = db.Column(db.Integer, primary_key=True)
-    name = db.Column(db.String(30), primary_key=True)
+    name = db.Column(db.String(30), index=True)
     lang = db.Column(db.Integer)
     bot_type = db.Column(db.Integer)
     project_id = db.Column(db.Integer, db.ForeignKey('project.id'))
