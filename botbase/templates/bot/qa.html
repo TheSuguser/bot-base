@@ -1,4 +1,4 @@
-{% extends 'bot/_base.html' %} {% block content %}
+{% extends 'bot/_base.html' %} {% block content %} {% from 'bootstrap/pagination.html' import render_pagination %}
 <div class="container">
     <div class="row">
         <div class="col-lg-1-12">
@@ -52,13 +52,11 @@
                         </a>
                 </tr>
                 {%endif%} {%endfor%}
-                <tr>
-                    <td scope="row"></td>
-                    <td></td>
-                    <td></td>
-                </tr>
             </tbody>
         </table>
+    </div>
+    <div class="row">
+        {{render_pagination(pagination)}}
     </div>
 </div>
 

@@ -1,5 +1,5 @@
 from flask import Blueprint
-from flask import render_template, flash, redirect, url_for, request, current_app, Blueprint, send_from_directory
+from flask import render_template, flash, redirect, url_for, request, current_app, Blueprint, send_from_directory, request
 from flask_login import login_required, current_user
 
 from botbase.models import User, Project, Bot, QASet
@@ -10,19 +10,23 @@ from botbase.decorators import admin_required, only_owner_can
 
 bot_bp = Blueprint('bot', __name__)
 
-@bot_bp.route("/<int:project_id>/<int:bot_id>", methods=['GET','POST'])
-@only_owner_can
-@login_required
-def index(project_id, bot_id):
-    return render_template('bot/index.html',project_id=project_id, bot_id=bot_id)
+# @bot_bp.route("/<int:project_id>/<int:bot_id>", methods=['GET','POST'])
+# @only_owner_can
+# @login_required
+# def index(project_id, bot_id):
+#     return render_template('bot/index.html',project_id=project_id, bot_id=bot_id)
 
 # TODO 添加轮询
+@bot_bp.route("/<int:project_id>/<int:bot_id>", methods=['GET','POST'])
 @bot_bp.route("<int:project_id>/<int:bot_id>/qa", methods=['GET','POST'])
 @only_owner_can
 @login_required
 def qa(project_id, bot_id):
-    qa_set = QASet.query.filter_by(bot_id=bot_id).all()
-    return render_template('bot/qa.html', project_id=project_id, bot_id=bot_id, qa_set=qa_set)
+    page = request.args.get('page', default=1, type=int)
+    per_page = current_app.config['QA_PER_PAGE']
+    pagination = QASet.query.filter_by(bot_id=bot_id).paginate(page, per_page=per_page)
+    qa_set = pagination.items
+    return render_template('bot/qa.html', project_id=project_id, bot_id=bot_id, pagination=pagination, qa_set=qa_set)
 
 @bot_bp.route('<int:project_id>/<int:bot_id>/add_qa', methods=['GET', 'POST'])
 @only_owner_can
