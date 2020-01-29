@@ -2,6 +2,7 @@ from flask_wtf import FlaskForm
 from wtforms import StringField, PasswordField, BooleanField, SubmitField, SelectField
 from wtforms.validators import DataRequired, Length, Email, EqualTo
 from wtforms import ValidationError
+from flask_wtf.file import FileAllowed, FileField, FileRequired
 
 from botbase.models import User
 
@@ -61,3 +62,8 @@ class QAForm(FlaskForm):
     answer = StringField('答案', validators=[DataRequired(message="请输入答案")])
     topic = StringField('类别', validators=[DataRequired(message="请输入类别")])
     submit = SubmitField('添加')
+
+class UploadQAForm(FlaskForm):
+    qa_set = FileField("上传文件（仅支持xlsx格式）", validators=[FileRequired(), FileAllowed(['xlsx'])])
+    cover = BooleanField('清空原有数据')
+    submit = SubmitField('上传')
