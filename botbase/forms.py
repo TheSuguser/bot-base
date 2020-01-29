@@ -1,6 +1,9 @@
 from flask_wtf import FlaskForm
 from wtforms import StringField, PasswordField, BooleanField, SubmitField, SelectField
 from wtforms.validators import DataRequired, Length, Email, EqualTo
+from wtforms import ValidationError
+
+from botbase.models import User
 
 class LoginForm(FlaskForm):
     #DataRequired，当你在当前表格没有输入而直接到下一个表格时会提示你输入
@@ -21,6 +24,16 @@ class RegisterForm(FlaskForm):
     password = PasswordField('密码', validators=[DataRequired(message="Please input password")])
     password_conf = PasswordField('请再次确认密码', validators=[DataRequired(message="Please input password"), EqualTo("password")])
     submit = SubmitField('注册')
+
+    def validate_username(self, field):
+        if User.query.filter_by(username=field.data).first():
+            raise ValidationError("The username is already used")
+    
+    def validate_email(self, field):
+        if User.query.filter_by(email=field.data).first():
+            raise ValidationError("The email is already used")
+
+
 
 class ProjectForm(FlaskForm):
     name = StringField('项目名称', validators=[DataRequired(message="Please input name")])

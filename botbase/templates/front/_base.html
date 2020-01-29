@@ -43,6 +43,24 @@
                     </li>
                 </ul>
             </li>
+            {% if current_user.is_admin%}
+            <li class="nav-item dropdown">
+                <a class="dropdown-toggle" href="#">
+                    <span class="icon-holder">
+            <i class="lni-cloud"></i>
+        </span>
+                    <span class="title">用户管理</span>
+                    <span class="arrow">
+            <i class="lni-chevron-right"></i>
+        </span>
+                </a>
+                <ul class="dropdown-menu sub-down">
+                    <li>
+                        <a href="{{url_for('admin.user_manage')}}">用户列表</a>
+                    </li>
+                </ul>
+            </li>
+            {% endif%}
         </ul>
     </div>
 </div>
