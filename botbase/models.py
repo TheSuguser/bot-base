@@ -98,15 +98,7 @@ class User(db.Model, UserMixin):
 #     # 定义外键
 #     user = db.Column(db.Integer, db.ForeignKey('user.id'))
 
-# class QASet(db.Model):
-#     __tablename__ = 'qaset'
-#     id = db.Column(db.Integer, primary_key=True)
-#     question = db.Column(db.String(128), unique=True)
-#     db.Column(db.Text)
-#     topic = db.Column(db.String(50))
 
-#     #定义外键
-#     chatbot_id = db.Column(db.Integer, db.ForeignKey('botobject.id'))
 
 
 class Project(db.Model):
@@ -123,10 +115,20 @@ class Project(db.Model):
 
 
 class Bot(db.Model):
-    __tablename__ = 'chatbot'
+    __tablename__ = 'bot'
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String(30), index=True)
     lang = db.Column(db.Integer)
     bot_type = db.Column(db.Integer)
     project_id = db.Column(db.Integer, db.ForeignKey('project.id'))
     user_id = db.Column(db.Integer, db.ForeignKey('user.id'))
+
+class QASet(db.Model):
+    __tablename__ = 'qaset'
+    id = db.Column(db.Integer, primary_key=True)
+    question = db.Column(db.String(128), unique=True)
+    answer = db.Column(db.Text)
+    topic = db.Column(db.String(50))
+
+    #定义外键
+    bot_id = db.Column(db.Integer, db.ForeignKey('bot.id'))

@@ -1,0 +1,67 @@
+{% extends 'bot/_base.html' %} {% block content %}
+<div class="container">
+    <div class="row">
+        <div class="col-lg-1-12">
+            <h1>
+                问答集管理
+            </h1>
+        </div>
+
+    </div>
+</div>
+
+<div class="container">
+    <div class="row">
+        <div class="col-lg-6">
+        </div>
+        <div class="col-lg-6">
+            <a name="" id="" class="btn btn-common" href="{{url_for('bot.add_qa', project_id=project_id, bot_id=bot_id)}}" role="button">
+                + 添加问答对
+            </a>
+            <a name="" id="" class="btn btn-primary" href="#" role="button">从excel中导入</a>
+            <a name="" id="" class="btn btn-primary" href="#" role="button">从txt中导入</a>
+        </div>
+    </div>
+</div>
+
+<div class="container">
+
+    <div class="row">
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>id</th>
+                    <th>问题</th>
+                    <th>答案</th>
+                    <th>类别</th>
+                    <th>操作</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for qa in qa_set%} {% if qa.question%}
+                <tr>
+                    <td scope="row">{{qa.id}}</td>
+                    <td>{{qa.question}}</td>
+                    <td>{{qa.answer}}</td>
+                    <td>{{qa.topic}}</td>
+                    <td>
+                        <form class="inline" method="POST" action="{{url_for('bot.delete_qa', qa_id=qa.id, project_id=project_id, bot_id=bot_id)}}">
+                            <input type="hidden" name="csrf_token" value="{{ csrf_token()}}" />
+                            <button type="submit" class="btn btn-danger btn-sm" onclick="return confirm('确定删除该问答对？')">删除</button>
+                        </form>
+                        </a>
+                </tr>
+                {%endif%} {%endfor%}
+                <tr>
+                    <td scope="row"></td>
+                    <td></td>
+                    <td></td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
+
+
+
+{% endblock content%}

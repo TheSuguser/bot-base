@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html>
+
+<!-- source http://www.scnoob.com More templates http://www.scnoob.com/moban -->
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <title>D.Bot</title>
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='vendor/css/bootstrap.min.css') }}">
+    <link rel="stylesheet" type="text/css" href="{{url_for('static', filename='vendor/fonts/line-icons.css')}}">
+    <link rel="stylesheet" href="{{url_for('static', filename='vendor/plugins/morris/morris.css')}}">
+    <link rel="stylesheet" type="text/css" href="{{url_for('static', filename='vendor/css/main.css')}}">
+    <link rel="stylesheet" type="text/css" href="{{url_for('static', filename='vendor/css/responsive.css')}}">
+</head>
+
+<body>
+    <div class="app header-default side-nav-dark">
+        <div class="layout">
+            <div class="header navbar">
+                <div class="header-container">
+                    <div class="nav-logo">
+                        <a href="index.html">
+                            <b><img src="{{url_for('static', filename='vendor/img/dbot_logo.png')}}" height="34px" alt=""></b>
+                            <span class="logo">
+                                <img src="{{url_for('static', filename='vendor/img/dbot_logo_text.png')}}" height="34px" alt="">
+                            </span>
+                        </a>
+                    </div>
+                    <ul class="nav-left">
+                        <li>
+                            <a class="sidenav-fold-toggler" href="javascript:void(0);">
+                                <i class="lni-menu"></i>
+                            </a>
+                            <a class="sidenav-expand-toggler" href="javascript:void(0);">
+                                <i class="lni-menu"></i>
+                            </a>
+                        </li>
+                    </ul>
+                    <ul class="nav-right">
+                        <li>
+                            <a>
+                                <button type="button" class="btn btn-common">
+                                    登录
+                                </button>
+                            </a>
+
+                        </li>
+                        <li>
+                            <a>
+                                <button type="button" class="btn btn-primary">
+                                    申请试用
+                                </button>
+                            </a>
+
+                        </li>
+
+                        <li class="user-profile dropdown dropdown-animated scale-left">
+                            <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+                                <img class="profile-img img-fluid" src="{{url_for('static', filename='vendor/img/avatar/avatar.jpg')}}" alt="">
+                            </a>
+                            <ul class="dropdown-menu dropdown-md">
+                                <li>
+                                    <ul class="list-media">
+                                        <li class="list-item avatar-info">
+                                            <div class="media-img">
+                                                <img src="{{url_for('static', filename='vendor/img/avatar/avatar.jpg')}}" alt="">
+                                            </div>
+                                            <div class="info">
+                                                <span class="title text-semibold">Tomas Murray</span>
+                                                <span class="sub-title">UI/UX Desinger</span>
+                                            </div>
+                                        </li>
+                                    </ul>
+                                    <li>
+                                        <li>
+                                            <a href="#">
+                                                <i class="lni-lock"></i>
+                                                <span>Logout</span>
+                                            </a>
+                                        </li>
+                            </ul>
+                            </li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="swlink">Developed by DAI</div>
+
+            <div class="side-nav expand-lg">
+                <div class="side-nav-inner">
+                    <ul class="side-nav-menu">
+                        <li class="side-nav-header">
+                            <span>Navigation</span>
+                        </li>
+                        <li class="nav-item dropdown open">
+                            <a href="#" class="dropdown-toggle">
+                                <span class="icon-holder">
+                        <i class="lni-dashboard"></i>
+                    </span>
+                                <span class="title">知识管理</span>
+                                <span class="arrow">
+                        <i class="lni-chevron-right"></i>
+                    </span>
+                            </a>
+                            <ul class="dropdown-menu sub-down">
+                                <li class="active">
+                                    <a href="index.html">问答对管理</a>
+                                </li>
+                                <li>
+                                    <a href="index-2.html">近义词管理</a>
+                                </li>
+                                <li>
+                                    <a href="index-2.html">停用词管理</a>
+                                </li>
+                            </ul>
+                        </li>
+                        <li class="nav-item dropdown">
+                            <a class="dropdown-toggle" href="#">
+                                <span class="icon-holder">
+                        <i class="lni-cloud"></i>
+                    </span>
+                                <span class="title">机器人设置</span>
+                                <span class="arrow">
+                        <i class="lni-chevron-right"></i>
+                    </span>
+                            </a>
+                            <ul class="dropdown-menu sub-down">
+                                <li>
+                                    <a href="email.html">参数设置</a>
+                                </li>
+                            </ul>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+
+
+            <div class="page-container">
+
+                <div class="main-content">
+                </div>
+
+
+                <footer class="content-footer">
+                    <div class="footer">
+                        <div class="copyright">
+                            <span>Copyright © 2018 <b class="text-dark">DAI</b>. All Right Reserved.</span>
+
+                        </div>
+                    </div>
+                </footer>
+
+            </div>
+
+        </div>
+    </div>
+
+    <div id="preloader">
+        <div class="loader" id="loader-1"></div>
+    </div>
+
+
+    <script src="{{url_for('static', filename='vendor/js/jquery-min.js')}}"></script>
+    <script src="{{url_for('static', filename='vendor/js/popper.min.js')}}"></script>
+    <script src="{{url_for('static', filename='vendor/js/bootstrap.min.js')}}"></script>
+    <script src="{{url_for('static', filename='vendor/js/jquery.app.js')}}"></script>
+    <script src="{{url_for('static', filename='vendor/js/main.js')}}"></script>
+
+    <script src="{{url_for('static', filename='vendor/plugins/morris/morris.min.js')}}"></script>
+    <script src="{{url_for('static', filename='vendor/plugins/raphael/raphael-min.js')}}"></script>
+    <script src="{{url_for('static', filename='vendor/js/dashborad1.js')}}"></script>
+</body>
+
+<!-- source http://www.scnoob.com More templates http://www.scnoob.com/moban -->
+
+</html>

@@ -42,3 +42,9 @@ class BotForm(FlaskForm):
         default=1,
         coerce = int)
     submit = SubmitField('创建机器人')
+
+class QAForm(FlaskForm):
+    question = StringField('问题', validators=[DataRequired(message="请输入问题")])
+    answer = StringField('答案', validators=[DataRequired(message="请输入答案")])
+    topic = StringField('类别', validators=[DataRequired(message="请输入类别")])
+    submit = SubmitField('添加')

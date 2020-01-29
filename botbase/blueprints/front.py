@@ -6,11 +6,14 @@ from botbase.models import User, Project
 from botbase.forms import ProjectForm
 from botbase.extensions import db
 from botbase.utils import redirect_back
+from botbase.decorators import only_owner_can
 
 front_bp = Blueprint('front', __name__)
 
 @front_bp.route('/')
 def index():
+    if current_user.is_authenticated:
+        return redirect(url_for('front.panel'))
     return render_template('front/index.html')
 
 @front_bp.route('/panel')
@@ -34,6 +37,7 @@ def create_project():
     return render_template('front/create_project.html', form=form)
 
 @front_bp.route('/project/<int:project_id>/delete', methods=['POST'])
+@only_owner_can
 @login_required
 def delete_project(project_id):
     project = Project.query.get_or_404(project_id)

@@ -1,82 +1,141 @@
 <!DOCTYPE html>
 <html lang="zh-cn">
-    <head>
-        {% block head %}
-        <meta charset="utf-8">
-        <meta name="viewpoint" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-        <title>
-            {% block title %}
-            {% endblock title %}
-            D.Bot
-        </title>
-        <link rel="icon" href="{{url_for('static', filename='favicon.ico')}}">
-        <link rel="stylesheet" href="{{ url_for('static', filename='vendor/bootstrap/css/bootstrap.min.css') }}">
-        <script src="{{url_for('static', filename='vendor/bootstrap/js/bootstrap.min.js')}}"></script>
-        <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
-        <!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script> -->
-        {% endblock head %}
-    </head>
-    <body>
-        {% block navbar%}
-        <nav class="navbar navbar-expand-lg navbar-light" style="background-color: #eaf4ec;">
-            <a class="navbar-brand" href="/">D.Bot</a>
-            <div class="collapse navbar-collapse" id="collapsibleNavId">
-                <ul class="navbar-nav ml-auto mt-2 mt-lg-0">
-                    {% if current_user.is_authenticated %}
-                    <li class="nav-item">
-                        <a class="nav-link" href="#">{{current_user.role.name}}</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="{{url_for('front.panel')}}">{{current_user.username}}</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="{{url_for('auth.logout')}}">登出</a>
-                    </li>
-                    {%else%}
-                    <li class="nav-item">
-                        <a class="nav-link" href="{{url_for('auth.login')}}">登录</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="{{url_for('auth.trial')}}">申请试用</a>
-                    </li>
-                    {%endif%}
-                </ul>
-                
-                </nav>
-            </div>
-        </nav>       
-        {% endblock navbar %}
 
-        <main>
-            {% for message in get_flashed_messages(with_categories=True) %}
-            <div class="alert alert-{{ message[0] }}" role="alert">
-                <button type="button" class="close" data-dismiss="alert">&times;</button>
-                {{ message[1] }}
+<head>
+    {% block head %}
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <title>
+        {%block title%} {%endblock title%} D.Bot
+    </title>
+    <link rel="icon" href="{{url_for('static', filename='favicon.ico')}}">
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='vendor/css/bootstrap.min.css') }}">
+    <link rel="stylesheet" type="text/css" href="{{url_for('static', filename='vendor/fonts/line-icons.css')}}">
+    <link rel="stylesheet" href="{{url_for('static', filename='vendor/plugins/morris/morris.css')}}">
+    <link rel="stylesheet" type="text/css" href="{{url_for('static', filename='vendor/css/main.css')}}">
+    <link rel="stylesheet" type="text/css" href="{{url_for('static', filename='vendor/css/responsive.css')}}"> {%endblock head%}
+</head>
+
+<body>
+    <div class="app header-default side-nav-dark">
+        <div class="layout">
+            <div class="header navbar">
+                <div class="header-container">
+                    <div class="nav-logo">
+                        <a href="index.html">
+                            <b><img src="{{url_for('static', filename='vendor/img/dbot_logo.png')}}" height="34px" alt=""></b>
+                            <span class="logo">
+                                <img src="{{url_for('static', filename='vendor/img/dbot_logo_text.png')}}" height="34px" alt="">
+                            </span>
+                        </a>
+                    </div>
+                    <ul class="nav-left">
+                        <li>
+                            <a class="sidenav-fold-toggler" href="javascript:void(0);">
+                                <i class="lni-menu"></i>
+                            </a>
+                            <a class="sidenav-expand-toggler" href="javascript:void(0);">
+                                <i class="lni-menu"></i>
+                            </a>
+                        </li>
+                    </ul>
+
+                    <ul class="nav-right">
+                        {% if not current_user.is_authenticated%}
+                        <li>
+                            <a href="{{url_for('auth.login')}}">
+                                <button type="button" class="btn btn-common">
+                                    登录
+                                </button>
+                            </a>
+
+                        </li>
+                        <li>
+                            <a href="{{url_for('auth.trial')}}">
+                                <button type="button" class="btn btn-primary">
+                                    申请试用
+                                </button>
+                            </a>
+
+                        </li>
+                        {%else%}
+
+                        <li class="user-profile dropdown dropdown-animated scale-left">
+                            <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+                                <img class="profile-img img-fluid" src="{{url_for('static', filename='vendor/img/avatar/avatar.jpg')}}" alt="">
+                            </a>
+                            <ul class="dropdown-menu dropdown-md">
+                                <li>
+                                    <ul class="list-media">
+                                        <li class="list-item avatar-info">
+                                            <div class="media-img">
+                                                <img src="{{url_for('static', filename='vendor/img/avatar/avatar.jpg')}}" alt="">
+                                            </div>
+                                            <a href="{{url_for('front.panel')}}">
+                                                <div class="info">
+                                                    <span class="title text-semibold">{{current_user.username}}</span>
+                                                    <span class="sub-title">{{current_user.role.name}}</span>
+                                                </div>
+                                            </a>
+
+                                        </li>
+                                    </ul>
+                                    <li>
+                                        <li>
+                                            <a href="{{url_for('auth.logout')}}">
+                                                <i class="lni-lock"></i>
+                                                <span>Logout</span>
+                                            </a>
+                                        </li>
+                            </ul>
+                            </li>
+                            {%endif%}
+                    </ul>
+                </div>
             </div>
-            {% endfor %}
-            <div class="container">
-                {% block memu %}
-                {% endblock memu %}
-                
-                {% block content %}
-                {% endblock content %}
-                
-                {% block footer %}
-                <footer>
-                    <p class="float-left">
-                        <small>&copy; 2020
-                            <a href="/" title="Written by Joe Zheng">DAI</a> -
-                            <a href="/" title="A HelloFlask project">D.Bot</a>
-                        </small>
-                    </p>
-                    <p class="float-right">
-                        <small>Deploy ChatBot Smoothly</small>
-                    </p>
+
+            <div class="swlink">Developed by DAI</div>
+            {%block sidebar%} {%endblock sidebar%}
+
+
+            <div class="page-container">
+                <div class="main-content">
+                    {% for message in get_flashed_messages(with_categories=True) %}
+                    <div class="alert alert-{{ message[0] }}" role="alert">
+                        <button type="button" class="close" data-dismiss="alert">&times;</button> {{ message[1] }}
+                    </div>
+                    {% endfor %} {%block content%} {%endblock content%}
+                </div>
+
+
+                <footer class="content-footer">
+                    <div class="footer">
+                        <div class="copyright">
+                            <span>Copyright © 2018 <b class="text-dark">DAI</b>. All Right Reserved.</span>
+
+                        </div>
+                    </div>
                 </footer>
-                {% endblock footer%}                
+
             </div>
-        </main>
+
+        </div>
+    </div>
+
+    <div id="preloader">
+        <div class="loader" id="loader-1"></div>
+    </div>
 
 
-    </body>
+    <script src="{{url_for('static', filename='vendor/js/jquery-min.js')}}"></script>
+    <script src="{{url_for('static', filename='vendor/js/popper.min.js')}}"></script>
+    <script src="{{url_for('static', filename='vendor/js/bootstrap.min.js')}}"></script>
+    <script src="{{url_for('static', filename='vendor/js/jquery.app.js')}}"></script>
+    <script src="{{url_for('static', filename='vendor/js/main.js')}}"></script>
+
+    <script src="{{url_for('static', filename='vendor/plugins/morris/morris.min.js')}}"></script>
+    <script src="{{url_for('static', filename='vendor/plugins/raphael/raphael-min.js')}}"></script>
+    <script src="{{url_for('static', filename='vendor/js/dashborad1.js')}}"></script>
+</body>
+
 </html>
