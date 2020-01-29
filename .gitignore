@@ -17,3 +17,5 @@ build/
 .vscode/
 
 *.cpython-37.pyc
+
+test/
