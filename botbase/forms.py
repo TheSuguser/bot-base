@@ -67,4 +67,12 @@ class UploadQAForm(FlaskForm):
     qa_set = FileField("上传文件（仅支持xlsx格式）", validators=[FileRequired(), FileAllowed(['xlsx'])])
     cover = BooleanField('清空原有数据')
     submit = SubmitField('上传')
-    
+
+class SynWordForm(FlaskForm):
+    base_word = StringField('原词', validators=[DataRequired(message="请输入原词")])
+    synword = StringField('答案', validators=[DataRequired(message="请输入同义词")])
+    submit = SubmitField('添加')
+
+class StopWordForm(FlaskForm):
+    word = StringField('停用词（多个词间用“，”隔开）', validators=[DataRequired(message="请输入原词")])
+    submit = SubmitField('添加')

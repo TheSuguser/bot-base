@@ -2,8 +2,8 @@ from flask import Blueprint
 from flask import render_template, flash, redirect, url_for, request, current_app, Blueprint, send_from_directory, request
 from flask_login import login_required, current_user
 
-from botbase.models import User, Project, Bot, QASet
-from botbase.forms import ProjectForm, BotForm, QAForm, UploadQAForm
+from botbase.models import User, Project, Bot, QASet, SynWord, StopWord
+from botbase.forms import ProjectForm, BotForm, QAForm, UploadQAForm, SynWordForm, StopWordForm
 from botbase.extensions import db
 from botbase.utils import redirect_back
 from botbase.decorators import admin_required, only_owner_can
@@ -46,7 +46,7 @@ def add_qa(project_id, bot_id):
         )
         db.session.add(qa)
         db.session.commit()
-        flash("新的问题添加成功", "info")
+        flash("新的问题添加成功", "success")
         return redirect(url_for('bot.qa', project_id=project_id, bot_id=bot_id))
     return render_template('bot/add_qa.html', form=form, project_id=project_id, bot_id=bot_id)
 
@@ -61,8 +61,8 @@ def delete_qa(project_id, bot_id, qa_id):
     flash('该问答对已删除', 'success')
     return redirect_back()
 
-# TODO 改为模态框实现
-@bot_bp.route('<int:project_id>/<int:bot_id>/<int:qa_id>/edit', methods=['GET', 'POST'])
+# TODO 改为模态框实现 可能需要js协助
+@bot_bp.route('<int:project_id>/<int:bot_id>/<int:qa_id>/edit_qa', methods=['GET', 'POST'])
 @only_owner_can
 @login_required
 def edit_qa(project_id, bot_id, qa_id):
@@ -130,4 +130,61 @@ def upload_qa(project_id, bot_id):
            
     return render_template('bot/upload_qa.html',form=form, project_id=project_id, bot_id=bot_id)
     
-    
+
+@bot_bp.route("<int:project_id>/<int:bot_id>/synword", methods=['GET','POST'])
+@only_owner_can
+@login_required
+def synword(project_id, bot_id):
+    page = request.args.get('page', default=1, type=int)
+    per_page = current_app.config['QA_PER_PAGE']
+    pagination = SynWord.query.filter_by(bot_id=bot_id).paginate(page, per_page=per_page)
+    synwords = pagination.items
+    return render_template('bot/synword.html', project_id=project_id, bot_id=bot_id, pagination=pagination, synwords=synwords)
+
+@bot_bp.route('<int:project_id>/<int:bot_id>/add_synword', methods=['GET', 'POST'])
+@only_owner_can
+@login_required
+def add_synword(project_id, bot_id):
+    form=SynWordForm()
+    if form.validate_on_submit():
+        b = form.base_word.data 
+        s = form.synword.data 
+        syn = SynWord(
+            base_word=b,
+            syn_word=s,
+            bot_id=bot_id
+        )
+        db.session.add(syn)
+        db.session.commit()
+        flash("新的近义词组添加成功", "success")
+        return redirect(url_for('bot.synword', project_id=project_id, bot_id=bot_id))
+    return render_template('bot/add_synword.html', form=form, project_id=project_id, bot_id=bot_id)
+
+@bot_bp.route('<int:project_id>/<int:bot_id>/<int:synword_id>/delete_synword', methods=['POST'])
+@only_owner_can
+@login_required
+def delete_synword(project_id, bot_id, synword_id):
+    synword = SynWord.query.get_or_404(synword_id)
+    db.session.delete(synword)
+    db.session.commit()
+    flash('该同义词集已删除', 'success')
+    return redirect_back()
+
+@bot_bp.route('<int:project_id>/<int:bot_id>/<int:synword_id>/edit_synword', methods=['GET', 'POST'])
+@only_owner_can
+@login_required
+def edit_synword(project_id, bot_id, synword_id):
+    synword = SynWord.query.get_or_404(synword_id)
+
+    form = SynWordForm(
+        base_word=synword.base_word,
+        synword=synword.syn_word)
+    form.submit.label.text = "保存"
+
+    if form.validate_on_submit():
+        synword.base_word=form.base_word.data
+        synword.syn_word=form.synword.data 
+        db.session.commit()
+        flash('问答对修改成功', 'success')
+        return redirect(url_for('bot.synword', project_id=project_id, bot_id=bot_id))
+    return render_template('bot/edit_synword.html', project_id=project_id, bot_id=bot_id, synword_id=synword_id, form=form)

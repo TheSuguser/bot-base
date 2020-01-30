@@ -1,0 +1,64 @@
+{% extends 'bot/_base.html' %} {%set active="synword"%}{% block content %} {% from 'bootstrap/pagination.html' import render_pagination %}
+<div class="container">
+    <div class="row">
+        <div class="col-lg-1-12">
+            <h1>
+                近义词管理
+            </h1>
+        </div>
+
+    </div>
+</div>
+
+
+<div class="container">
+
+    <div class="row">
+        <div class="col-12">
+            <div class="card">
+                <div class="card-header border-bottom">
+                    <a name="" id="" style="margin:5px" class="btn btn-common" href="{{url_for('bot.add_synword', project_id=project_id, bot_id=bot_id)}}" role="button">
+                            + 添加近义词
+                        </a>
+                </div>
+                <div class="card-body">
+                    <div class="table-responsive">
+                        <table class="table table-striped">
+                            <thead>
+                                <tr>
+                                    <th>id</th>
+                                    <th>原词</th>
+                                    <th>近义词</th>
+                                    <th>操作</th>
+                                </tr>
+                            </thead>
+                            {% for word in synwords%} {% if word.base_word%}
+                            <tr>
+                                <td scope="row">{{word.id}}</td>
+                                <td>{{word.base_word}}</td>
+                                <td>{{word.syn_word}}</td>
+                                <td>
+                                    <a name="" id="" class="btn btn-info btn-sm " href="{{url_for('bot.edit_synword', synword_id=word.id, project_id=project_id, bot_id=bot_id)}}" role="button">Edit</a>
+                                    <form class="inline" style="display:inline" method="POST" action="{{url_for('bot.delete_synword', synword_id=word.id, project_id=project_id, bot_id=bot_id)}}">
+                                        <input type="hidden" name="csrf_token" value="{{ csrf_token()}}" />
+                                        <button type="submit" class="btn btn-danger btn-sm" onclick="return confirm('确定删除该近义词组?')">Delete</button>
+                                    </form>
+                                </td>
+                            </tr>
+                            {%endif%} {%endfor%}
+                        </table>
+                        {{render_pagination(pagination)}}
+
+                    </div>
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+</div>
+
+
+
+{% endblock content%}

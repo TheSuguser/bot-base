@@ -22,7 +22,7 @@
                     <li {%if active=="synword" %} class="active" {%endif%}>
                         <a href="{{url_for('bot.synword', project_id=project_id, bot_id=bot_id)}}">同义词</a>
                     </li>
-                    <li>
+                    <li {%if active=="stopword" %} class="active" {%endif%}>
                         <a href="#">停用词</a>
                     </li>
                 </ul>

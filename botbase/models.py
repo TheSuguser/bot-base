@@ -132,3 +132,21 @@ class QASet(db.Model):
 
     #定义外键
     bot_id = db.Column(db.Integer, db.ForeignKey('bot.id'))
+
+# 近义词集合
+class SynWord(db.Model):
+    __tablename__ = 'synword'
+    id = db.Column(db.Integer, primary_key=True)
+    base_word = db.Column(db.String(10))
+    syn_word = db.Column(db.String(10))
+
+    #定义外键
+    bot_id = db.Column(db.Integer, db.ForeignKey('bot.id'))
+
+class StopWord(db.Model):
+    __tablename__ = 'stopword'
+    id = db.Column(db.Integer, primary_key=True)
+    word = db.Column(db.String(10))
+
+    #定义外键
+    bot_id = db.Column(db.Integer, db.ForeignKey('bot.id'))
