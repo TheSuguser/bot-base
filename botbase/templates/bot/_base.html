@@ -16,11 +16,11 @@
         </span>
                 </a>
                 <ul class="dropdown-menu sub-down">
-                    <li class="active">
+                    <li {%if active=="qa" %} class="active" {%endif%}>
                         <a href="{{url_for('bot.qa', project_id=project_id, bot_id=bot_id)}}">问答集</a>
                     </li>
-                    <li>
-                        <a href="#">同义词</a>
+                    <li {%if active=="synword" %} class="active" {%endif%}>
+                        <a href="{{url_for('bot.synword', project_id=project_id, bot_id=bot_id)}}">同义词</a>
                     </li>
                     <li>
                         <a href="#">停用词</a>
