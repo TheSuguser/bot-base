@@ -54,7 +54,7 @@
                                 <td>{{qa.answer}}</td>
                                 <td>{{qa.topic}}</td>
                                 <td>
-                                    <a name="" id="" class="btn btn-info btn-sm " href="#" role="button">Edit</a>
+                                    <a name="" id="" class="btn btn-info btn-sm " href="{{url_for('bot.edit_qa', project_id=project_id, bot_id=bot_id, qa_id=qa.id)}}" role="button">Edit</a>
                                     <form class="inline" style="display:inline" method="POST" action="{{url_for('bot.delete_qa', qa_id=qa.id, project_id=project_id, bot_id=bot_id)}}">
                                         <input type="hidden" name="csrf_token" value="{{ csrf_token()}}" />
                                         <button type="submit" class="btn btn-danger btn-sm" onclick="return confirm('确定删除该问答对？')">Delete</button>

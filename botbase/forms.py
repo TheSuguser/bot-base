@@ -4,7 +4,7 @@ from wtforms.validators import DataRequired, Length, Email, EqualTo
 from wtforms import ValidationError
 from flask_wtf.file import FileAllowed, FileField, FileRequired
 
-from botbase.models import User
+from botbase.models import User, QASet
 
 class LoginForm(FlaskForm):
     #DataRequired，当你在当前表格没有输入而直接到下一个表格时会提示你输入
@@ -67,3 +67,4 @@ class UploadQAForm(FlaskForm):
     qa_set = FileField("上传文件（仅支持xlsx格式）", validators=[FileRequired(), FileAllowed(['xlsx'])])
     cover = BooleanField('清空原有数据')
     submit = SubmitField('上传')
+    

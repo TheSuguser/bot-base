@@ -18,7 +18,6 @@ bot_bp = Blueprint('bot', __name__)
 # def index(project_id, bot_id):
 #     return render_template('bot/index.html',project_id=project_id, bot_id=bot_id)
 
-# TODO 添加轮询
 @bot_bp.route("/<int:project_id>/<int:bot_id>", methods=['GET','POST'])
 @bot_bp.route("<int:project_id>/<int:bot_id>/qa", methods=['GET','POST'])
 @only_owner_can
@@ -61,6 +60,28 @@ def delete_qa(project_id, bot_id, qa_id):
     db.session.commit()
     flash('该问答对已删除', 'success')
     return redirect_back()
+
+# TODO 改为模态框实现
+@bot_bp.route('<int:project_id>/<int:bot_id>/<int:qa_id>/edit', methods=['GET', 'POST'])
+@only_owner_can
+@login_required
+def edit_qa(project_id, bot_id, qa_id):
+    qa_set = QASet.query.get(qa_id)
+
+    form = QAForm(
+        question=qa_set.question,
+        answer=qa_set.answer,
+        topic=qa_set.topic)
+    form.submit.label.text = "保存"
+
+    if form.validate_on_submit():
+        qa_set.answer=form.answer.data
+        qa_set.question=form.question.data 
+        qa_set.topic=form.topic.data 
+        db.session.commit()
+        flash('问题修改成功', 'success')
+        return redirect(url_for('bot.qa', project_id=project_id, bot_id=bot_id))
+    return render_template('bot/edit_qa.html', project_id=project_id, bot_id=bot_id, qa_id=qa_id, form=form)
 
 @bot_bp.route('<int:project_id>/<int:bot_id>/upload_qa', methods=['GET', 'POST'])
 @only_owner_can
