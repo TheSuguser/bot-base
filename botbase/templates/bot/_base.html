@@ -3,7 +3,10 @@
     <div class="side-nav-inner">
         <ul class="side-nav-menu">
             <li class="side-nav-header">
-                <span>Navigation</span>
+                <a href="{url_for('project.panel', project_id=project_id)}">
+                    <span> <返回项目列表</span>
+                </a>
+
             </li>
             <li class="nav-item dropdown open">
                 <a href="#" class="dropdown-toggle">
@@ -23,7 +26,7 @@
                         <a href="{{url_for('bot.synword', project_id=project_id, bot_id=bot_id)}}">同义词</a>
                     </li>
                     <li {%if active=="stopword" %} class="active" {%endif%}>
-                        <a href="#">停用词</a>
+                        <a href="{{url_for('bot.stopword', project_id=project_id, bot_id=bot_id)}}">停用词</a>
                     </li>
                 </ul>
             </li>

@@ -10,6 +10,8 @@ from botbase.decorators import admin_required, only_owner_can
 
 from xlrd import open_workbook
 
+import re
+
 bot_bp = Blueprint('bot', __name__)
 
 # @bot_bp.route("/<int:project_id>/<int:bot_id>", methods=['GET','POST'])
@@ -188,3 +190,46 @@ def edit_synword(project_id, bot_id, synword_id):
         flash('问答对修改成功', 'success')
         return redirect(url_for('bot.synword', project_id=project_id, bot_id=bot_id))
     return render_template('bot/edit_synword.html', project_id=project_id, bot_id=bot_id, synword_id=synword_id, form=form)
+
+
+
+
+
+@bot_bp.route("<int:project_id>/<int:bot_id>/stopword", methods=['GET','POST'])
+@only_owner_can
+@login_required
+def stopword(project_id, bot_id):
+    page = request.args.get('page', default=1, type=int)
+    per_page = current_app.config['QA_PER_PAGE']
+    pagination = StopWord.query.filter_by(bot_id=bot_id).paginate(page, per_page=per_page)
+    stopword = pagination.items
+    return render_template('bot/stopword.html', project_id=project_id, bot_id=bot_id, pagination=pagination, stopword=stopword)
+
+@bot_bp.route('<int:project_id>/<int:bot_id>/add_stopword', methods=['GET', 'POST'])
+@only_owner_can
+@login_required
+def add_stopword(project_id, bot_id):
+    form=StopWordForm()
+    if form.validate_on_submit():
+        s = form.word.data 
+        word=re.split(",|，", s)
+        for w in word:
+            _stopword = StopWord(
+                word=w.strip(),
+                bot_id=bot_id
+            )
+            db.session.add(_stopword)
+        db.session.commit()
+        flash("新的停用词添加成功", "success")
+        return redirect(url_for('bot.stopword', project_id=project_id, bot_id=bot_id))
+    return render_template('bot/add_stopword.html', form=form, project_id=project_id, bot_id=bot_id)
+
+@bot_bp.route('<int:project_id>/<int:bot_id>/<int:stopword_id>/delete_stopword', methods=['POST'])
+@only_owner_can
+@login_required
+def delete_stopword(project_id, bot_id, stopword_id):
+    stopword = StopWord.query.get_or_404(stopword_id)
+    db.session.delete(stopword)
+    db.session.commit()
+    flash('该停用词已删除', 'success')
+    return redirect_back()
