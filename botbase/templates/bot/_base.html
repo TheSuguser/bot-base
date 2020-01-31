@@ -3,9 +3,12 @@
     <div class="side-nav-inner">
         <ul class="side-nav-menu">
             <li class="side-nav-header">
-                <a href="{url_for('project.panel', project_id=project_id)}">
-                    <span> <返回项目列表</span>
-                </a>
+                <span>
+                    <a href="{{url_for('project.index', project_id=project_id)}}">
+                       返回机器人列表
+                    </a> 
+                </span>
+
 
             </li>
             <li class="nav-item dropdown open">
