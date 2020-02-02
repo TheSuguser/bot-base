@@ -89,6 +89,21 @@
 
 <body class="text-center" data-gr-c-s-loaded="true" style="background-image: url({{url_for('static', filename='vendor/img/index.png')}});background-size: cover;">
 
+    <!-- <form class="form-signin">
+        <img class="mb-4" src="{{url_for('static', filename='vendor/img/dbot_logo.png')}}" alt="" height="72">
+        <h1 class="h3 mb-3 font-weight-normal">Please sign in</h1>
+        <label for="inputEmail" class="sr-only">Email address</label>
+        <input type="email" id="inputEmail" class="form-control" placeholder="Email address" required="" autofocus="">
+        <label for="inputPassword" class="sr-only">Password</label>
+        <input type="password" id="inputPassword" class="form-control" placeholder="Password" required="">
+        <div class="checkbox mb-3">
+            <label>
+      <input type="checkbox" value="remember-me"> Remember me
+    </label>
+        </div>
+        <button class="btn btn-lg btn-primary btn-block" type="submit">Sign in</button>
+        <p class="mt-5 mb-3 text-muted">© 2017-2019</p>
+    </form> -->
     <div class="container-fluid">
         <!-- <div class="row">
             <div class="col-lg-10">
@@ -96,29 +111,13 @@
             <div class="col-lg-2">
                 <a name="" id="" class="btn btn-warning" href="#" role="button">申请试用</a>
             </div>
-        </div> -->{% for message in get_flashed_messages(with_categories=True) %}
-        <div class="row">
-            <div class="col-lg-4">
-            </div>
-            <div class="col-lg-4">
-                <div class="alert alert-{{ message[0] }}" role="alert">
-                    <button type="button" class="close" data-dismiss="alert">&times;</button> {{ message[1] }}
-                </div>
-            </div>
-            <div class="col-lg-4">
-            </div>
-        </div>
-        {% endfor %} {%block content%} {%endblock content%}
+        </div> -->
         <div class="row">
             <form class="form-signin" method="post">
                 <img class="mb-4" src="{{url_for('static', filename='vendor/img/dbot_logo.png')}}" alt="" height="72">
-                <h1 class="h3 mb-3 font-weight-normal">欢迎使用D.Bot</h1>
-                {{form.csrf_token}} {{form.username.label(class="sr-only")}} {{form.username(class="form-control",placeholder="用户名")}} {{form.password.label(class='sr-only')}}{{form.password(class="form-control", placeholder="密码")}}
-                <div class="checkbox mb-3">
-                    {{form.remember_me}}{{form.remember_me.label}}
-                </div>
-                {{form.submit(class="btn btn-lg btn-primary btn-block")}}
-                <a name="" id="" class="btn btn-lg btn-warning btn-block" href="{{url_for('auth.trial')}}" role="button">申请试用</a>
+                <h1 class="h3 mb-3 font-weight-normal">请填写相关信息</h1>
+                {{form.csrf_token}} {{form.email.label(class="sr-only")}} {{form.email(class="form-control",placeholder="邮箱")}} {{form.department.label(class='sr-only')}}{{form.department(class="form-control", placeholder="部门")}} {{form.reason.label(class='sr-only')}}{{form.reason(class="form-control",
+                placeholder="业务场景")}} {{form.submit(class="btn btn-lg btn-warning btn-block")}}
             </form>
         </div>
 

@@ -1,44 +1,46 @@
-{% extends 'front/_base.html' %}
-{% from 'bootstrap/form.html' import render_form %}
+{% extends 'front/_base.html' %} {% from 'bootstrap/form.html' import render_form %} {% block title %}用户管理{% endblock %} {% block content %}
 
+<div class="container">
 
-{% block title %}用户管理{% endblock %}
+    <div class="row">
+        <div class="col-12">
+            <h3>
+                当前用户如下
+            </h3>
+            <div class="card">
+                <div class="card-header border-bottom">
 
-{% block content %}
-<h2>
-    当前用户如下
-</h2>
-<table class="table">
-    <thead>
-        <tr>
-            <th>用户名</th>
-            <th>邮箱</th>
-            <th>权限</th>
-            <th>操作</th>
-        </tr>
-    </thead>
-        <tbody>
-            {% if users%}
-            {% for user in users%}
-                <tr>
-                    <td>{{user.username}}</td>
-                    <td>{{user.email}}</td>
-                    <td>{{user.role.name}}</td>
-                    <td>
-                        {%if user.role.name != 'Administrator'%}
-                        <form class="inline" method="POST" action="{{url_for('admin.delete_user', user_id=user.id)}}">
-                            <input type="hidden" name="csrf_token" value="{{ csrf_token()}}"/>
-                            <button type="submit" class="btn btn-danger btn-sm" onclick="return confirm('确定删除该用户？')">Delete</button>
-                        </form>
-                        {%endif%}
-                    </td>
-                </tr>
-            {% endfor %}
-            {% endif %}
-</table>
+                    <a href="{{url_for('admin.register')}}">
+                        <button class="btn btn-primary float-right">+ 新建用户</button>
+                    </a>
+                </div>
+                <div class="card-body">
+                    <table class="table">
+                        <thead>
+                            <tr>
+                                <th>用户名</th>
+                                <th>邮箱</th>
+                                <th>权限</th>
+                                <th>操作</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% if users%} {% for user in users%}
+                            <tr>
+                                <td>{{user.username}}</td>
+                                <td>{{user.email}}</td>
+                                <td>{{user.role.name}}</td>
+                                <td>
+                                    {%if user.role.name != 'Administrator'%}
+                                    <form class="inline" method="POST" action="{{url_for('admin.delete_user', user_id=user.id)}}">
+                                        <input type="hidden" name="csrf_token" value="{{ csrf_token()}}" />
+                                        <button type="submit" class="btn btn-danger btn-sm" onclick="return confirm('确定删除该用户？')">Delete</button>
+                                    </form>
+                                    {%endif%}
+                                </td>
+                            </tr>
+                            {% endfor %} {% endif %}
+                    </table>
+                </div>
 
-<a href="{{url_for('admin.register')}}">
-    <button class="btn-default">+ 新建用户</button>
-</a>
-
-{% endblock content%}
+                {% endblock content%}

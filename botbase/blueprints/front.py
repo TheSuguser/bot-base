@@ -1,20 +1,35 @@
 from flask import Blueprint
 from flask import render_template, flash, redirect, url_for, request, current_app, Blueprint, send_from_directory
-from flask_login import login_required, current_user
+from flask_login import login_user, logout_user, login_required, current_user
 
 from botbase.models import User, Project
-from botbase.forms import ProjectForm
+from botbase.forms import ProjectForm, LoginForm
 from botbase.extensions import db
 from botbase.utils import redirect_back
 from botbase.decorators import only_owner_can
 
 front_bp = Blueprint('front', __name__)
 
-@front_bp.route('/')
+@front_bp.route('/', methods=['GET', 'POST'])
 def index():
     if current_user.is_authenticated:
         return redirect(url_for('front.panel'))
-    return render_template('front/index.html')
+    form = LoginForm()
+    if form.validate_on_submit():
+        username = form.username.data 
+        password = form.password.data 
+        remember = form.remember_me.data 
+        user = User.query.filter_by(username=username.lower()).first()
+
+        if user is not None and user.validate_password(password):
+            login_user(user, remember)
+            # print(current_user.is_admin)
+            flash('welcome back', 'info')
+            return redirect(url_for('front.panel'))
+        else:
+            flash('无效的账户或密码', 'warning')
+            return redirect(url_for('front.index'))
+    return render_template('index.html', form=form)
 
 @front_bp.route('/panel')
 @login_required

@@ -76,3 +76,15 @@ class SynWordForm(FlaskForm):
 class StopWordForm(FlaskForm):
     word = StringField('停用词', validators=[DataRequired(message="请输入原词")])
     submit = SubmitField('添加')
+
+
+class QABotBasicForm(FlaskForm):
+    name = StringField('姓名', validators=[DataRequired(message="请输入机器人姓名")])
+    welcome = StringField('欢迎语', validators=[DataRequired(message="请输入机器人欢迎语")])
+    unknown = StringField('澄清语', validators=[DataRequired(message="请输入澄清玉")])
+    k1 = SelectField(
+        '多选问题选项数量',
+        choices=[(0,0), (1,1), (2,2), (3,3), (4,4), (5,5)],
+        default=5,
+        validators=[DataRequired()])
+

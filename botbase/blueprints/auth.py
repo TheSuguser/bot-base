@@ -32,13 +32,13 @@ def login():
 @auth_bp.route('/logout')
 def logout():
     logout_user()
-    flash('Logout success.', 'info')
+    #flash('Logout success.', 'info')
     return redirect(url_for('front.index'))
 
 @auth_bp.route('/trial', methods=['GET', 'POST'])
 def trial():
     form = TrialForm()
     if form.validate_on_submit():
-        flash("您的申请已发送，请等待回复")
+        flash("您的申请已发送，请等待回复", 'success')
         return redirect(url_for('front.index'))
-    return render_template('auth/trial.html', form=form)
+    return render_template('trial.html', form=form)
