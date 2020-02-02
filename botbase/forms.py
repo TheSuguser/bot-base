@@ -1,6 +1,6 @@
 from flask_wtf import FlaskForm
-from wtforms import StringField, PasswordField, BooleanField, SubmitField, SelectField
-from wtforms.validators import DataRequired, Length, Email, EqualTo
+from wtforms import StringField, PasswordField, BooleanField, SubmitField, SelectField, FloatField
+from wtforms.validators import DataRequired, Length, Email, EqualTo, NumberRange
 from wtforms import ValidationError
 from flask_wtf.file import FileAllowed, FileField, FileRequired
 
@@ -80,13 +80,15 @@ class StopWordForm(FlaskForm):
 
 class QABotBasicForm(FlaskForm):
     name = StringField('姓名', validators=[DataRequired(message="请输入机器人姓名")])
-    welcome = StringField('欢迎语', validators=[DataRequired(message="请输入机器人欢迎语")])
-    unknown = StringField('澄清语', validators=[DataRequired(message="请输入澄清玉")])
+    th1 = FloatField('肯定回答临界值', validators=[DataRequired(), NumberRange(0,1, message="请输入0-1之间的有效数字") ])
+    th2 = th1 = FloatField('多选回答临界值', validators=[DataRequired(), NumberRange(0,1, message="请输入0-1之间的有效数字") ])
     k1 = SelectField(
         '多选问题选项数量',
         choices=[(0,0), (1,1), (2,2), (3,3), (4,4), (5,5)],
         default=5,
-        validators=[DataRequired()])
+        validators=[DataRequired()],
+        coerce = int)
+    submit = SubmitField('保存')
 
 class ProjectConfigForm(FlaskForm):
     name = StringField('姓名', validators=[DataRequired(message="请输入机器人姓名")])

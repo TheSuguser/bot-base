@@ -237,7 +237,21 @@ def delete_stopword(project_id, bot_id, stopword_id):
 @bot_bp.route('<int:project_id>/<int:bot_id>/basic_config', methods=['GET', 'POST'])
 @only_owner_can
 @login_required
-def qa_basic_config(project_id, bot_id):
+def qa_config(project_id, bot_id):
     qabot = QABot.query.filter_by(bot_id=bot_id).first()
-    form = QABotBasicForm()
-    return render_template('bot/basic_config.html', project_id=project_id, bot_id=bot_id, form=form)
+    form = QABotBasicForm(
+        name=qabot.name,
+        th1=qabot.th1,
+        th2=qabot.th2,
+        k1=qabot.k1
+    )
+    if form.validate_on_submit():
+        print(form.k1.data)
+        qabot.name = form.name.data 
+        qabot.th1 = form.th1.data 
+        qabot.th2 = form.th2.data 
+        qabot.k1 = form.k1.data 
+        db.session.commit()
+        flash('机器人参数保存成功', 'success')
+        return render_template('bot/config.html', project_id=project_id, bot_id=bot_id, form=form)
+    return render_template('bot/config.html', project_id=project_id, bot_id=bot_id, form=form)

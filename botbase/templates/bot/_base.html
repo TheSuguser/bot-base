@@ -44,11 +44,8 @@
         </span>
                 </a>
                 <ul class="dropdown-menu sub-down">
-                    <li>
-                        <a href="#">基本参数</a>
-                    </li>
-                    <li>
-                        <a href="#">高级配置</a>
+                    <li {%if active=="config" %} class="active" {%endif%}>
+                        <a href="{{url_for('bot.qa_config', project_id=project_id, bot_id=bot_id)}}">基本参数</a>
                     </li>
                 </ul>
             </li>
