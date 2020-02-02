@@ -47,6 +47,22 @@
             <li class="nav-item dropdown">
                 <a class="dropdown-toggle" href="#">
                     <span class="icon-holder">
+            <i class="lni-paint-roller"></i>
+        </span>
+                    <span class="title">项目设置</span>
+                    <span class="arrow">
+            <i class="lni-chevron-right"></i>
+        </span>
+                </a>
+                <ul class="dropdown-menu sub-down">
+                    <li>
+                        <a href="{{url_for('project.config',project_id=project_id)}}">基本设置</a>
+                    </li>
+                </ul>
+            </li>
+            <li class="nav-item dropdown">
+                <a class="dropdown-toggle" href="#">
+                    <span class="icon-holder">
             <i class="lni-eye"></i>
         </span>
                     <span class="title">发布</span>
@@ -60,6 +76,8 @@
                     </li>
                 </ul>
             </li>
+
+
         </ul>
     </div>
 </div>

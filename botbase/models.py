@@ -109,6 +109,9 @@ class Project(db.Model):
     create_time = db.Column(db.DateTime, default=datetime.utcnow, index=True)
     user_id = db.Column(db.Integer, db.ForeignKey('user.id'))
 
+    welcome = db.Column(db.String(200), default='欢迎使用dbot')
+    unknown = db.Column(db.String(200), default='对不起这个问题我暂时无法回答')
+
     def match(self, project_id, user_id):
         _project = Project.query.filter_by(id=project_id).first()
         return _project.user_id == user_id
@@ -150,3 +153,19 @@ class StopWord(db.Model):
 
     #定义外键
     bot_id = db.Column(db.Integer, db.ForeignKey('bot.id'))
+
+
+class QABot(db.Model):
+    __tablename__ = 'qabot'
+    id = db.Column(db.Integer, primary_key=True)
+    name = db.Column(db.String(30), index=True)
+    lang = db.Column(db.Integer)
+
+    th1 = db.Column(db.Float)
+    th2 = db.Column(db.Float)
+
+    k1 = db.Column(db.Integer)
+
+    bot_id = db.Column(db.Integer, db.ForeignKey('bot.id'), index=True)
+    project_id = db.Column(db.Integer, db.ForeignKey('project.id'))
+    user_id = db.Column(db.Integer, db.ForeignKey('user.id')) 

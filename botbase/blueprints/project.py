@@ -3,9 +3,10 @@ from flask import render_template, flash, redirect, url_for, request, current_ap
 from flask_login import login_required, current_user
 
 from botbase.models import User, Project, Bot
-from botbase.forms import ProjectForm, BotForm
+from botbase.forms import ProjectForm, BotForm, ProjectConfigForm
 from botbase.extensions import db
-from botbase.utils import redirect_back
+from botbase.utils.flask_tool import redirect_back
+from botbase.utils.create_bot import create_qa_bot
 from botbase.decorators import admin_required, only_owner_can
 
 project_bp = front_bp = Blueprint('project', __name__)
@@ -35,6 +36,8 @@ def create_bot(project_id):
         )
         db.session.add(bot)
         db.session.commit()
+        if bot_type == 1:
+            create_qa_bot(bot.id)
         flash('ChatBot添加完毕', 'info')
         return redirect(url_for('project.index', project_id=project_id))
     return render_template('project/create_bot.html', form=form, project_id=project_id)
@@ -48,3 +51,25 @@ def delete_bot(project_id, bot_id):
     db.session.commit()
     flash('Bot deleted.', 'success')
     return redirect_back()
+
+@project_bp.route('<int:project_id>/project_config', methods=['GET', 'POST'])
+@only_owner_can
+@login_required
+def config(project_id):
+    project = Project.query.get_or_404(project_id)
+    form = ProjectConfigForm(
+        name = project.name,
+        welcome=project.welcome,
+        unknown=project.unknown
+    )
+
+    if form.validate_on_submit():
+        project.name = form.name.data
+        project.welcome = form.welcome.data 
+        project.unknown = form.unknown.data 
+        db.session.commit()
+        flash('项目设置修改成功', 'success')
+        render_template('project/config.html', project_id=project_id, form=form)
+    return render_template('project/config.html', project_id=project_id, form=form)
+    
+

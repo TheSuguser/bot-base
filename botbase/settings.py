@@ -23,3 +23,8 @@ ADMIN_EMAIL = ["joezheng@deloitte.com.cn"]
 # 问答集上传设置
 QA_PER_PAGE = 10
 
+# QA机器人设置
+K1 = 5
+TH1 = 0.95
+TH2 = 0.7
+

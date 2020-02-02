@@ -2,10 +2,10 @@ from flask import Blueprint
 from flask import render_template, flash, redirect, url_for, request, current_app, Blueprint, send_from_directory, request
 from flask_login import login_required, current_user
 
-from botbase.models import User, Project, Bot, QASet, SynWord, StopWord
-from botbase.forms import ProjectForm, BotForm, QAForm, UploadQAForm, SynWordForm, StopWordForm
+from botbase.models import User, Project, Bot, QASet, SynWord, StopWord, QABot
+from botbase.forms import ProjectForm, BotForm, QAForm, UploadQAForm, SynWordForm, StopWordForm, QABotBasicForm
 from botbase.extensions import db
-from botbase.utils import redirect_back
+from botbase.utils.flask_tool import redirect_back
 from botbase.decorators import admin_required, only_owner_can
 
 from xlrd import open_workbook
@@ -233,3 +233,11 @@ def delete_stopword(project_id, bot_id, stopword_id):
     db.session.commit()
     flash('该停用词已删除', 'success')
     return redirect_back()
+
+@bot_bp.route('<int:project_id>/<int:bot_id>/basic_config', methods=['GET', 'POST'])
+@only_owner_can
+@login_required
+def qa_basic_config(project_id, bot_id):
+    qabot = QABot.query.filter_by(bot_id=bot_id).first()
+    form = QABotBasicForm()
+    return render_template('bot/basic_config.html', project_id=project_id, bot_id=bot_id, form=form)

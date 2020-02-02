@@ -5,7 +5,7 @@ from flask_login import login_user, logout_user, login_required, current_user
 from botbase.models import User, Project
 from botbase.forms import ProjectForm, LoginForm
 from botbase.extensions import db
-from botbase.utils import redirect_back
+from botbase.utils.flask_tool import redirect_back
 from botbase.decorators import only_owner_can
 
 front_bp = Blueprint('front', __name__)

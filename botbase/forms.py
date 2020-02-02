@@ -88,3 +88,8 @@ class QABotBasicForm(FlaskForm):
         default=5,
         validators=[DataRequired()])
 
+class ProjectConfigForm(FlaskForm):
+    name = StringField('姓名', validators=[DataRequired(message="请输入机器人姓名")])
+    welcome = StringField('欢迎语', validators=[DataRequired(message="请输入机器人欢迎语")])
+    unknown = StringField('澄清语', validators=[DataRequired(message="请输入澄清语")])
+    submit = SubmitField('保存')
