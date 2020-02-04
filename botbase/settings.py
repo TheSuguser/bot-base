@@ -28,3 +28,9 @@ K1 = 5
 TH1 = 0.95
 TH2 = 0.7
 
+# Logging配置
+LOG_PATH = "logs/botbase.log"
+LOG_MAX_BYTES = 10 * 1024 * 1024
+LOG_BACKUP_COUNT = 10
+
+

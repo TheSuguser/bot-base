@@ -1,9 +1,11 @@
 import os
 
 import click
+import logging
 
 from flask import Flask
 from flask import redirect, url_for, render_template
+from logging.handlers import RotatingFileHandler
 
 from botbase.blueprints.auth import auth_bp
 from botbase.blueprints.front import front_bp
@@ -34,6 +36,7 @@ def create_app(config=None):
     register_blueprints(app)
     register_errorhandlers(app)
     register_commands(app)
+    register_logging(app)
 
     return app
 
@@ -65,6 +68,23 @@ def register_errorhandlers(app):
     @app.errorhandler(403)
     def forbidden(e):
         return render_template('errors/403.html'), 403
+
+def register_logging(app):
+    app.logger.setLevel(logging.INFO)
+
+    formatter = logging.Formatter('%(asctime)s - %(name)s - %(levelname)s - %(messges)s')
+
+    file_handler = RotatingFileHandler(
+        app.config['LOG_PATH'],
+        maxBytes=app.config['LOG_MAX_BYTES'],
+        backupCount=app.config['LOG_BACKUP_COUNT']
+    )
+    file_handler.setFormatter(formatter)
+    file_handler.setLevel(logging.INFO)
+
+    if not app.debug:
+        app.logger.addHandler(file_handler)
+
 
 # 创建管理员帐号
 def register_commands(app):
