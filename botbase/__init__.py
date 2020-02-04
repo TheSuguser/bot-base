@@ -48,11 +48,6 @@ def register_blueprints(app):
     app.register_blueprint(project_bp, url_prefix='/project')
     app.register_blueprint(bot_bp, url_prefix='/bot')
 
-    # 临时代码 从主页跳转到login
-    # @app.route('/')
-    # def index():
-    #     return redirect(url_for('auth.login'))
-
 def register_extension(app):
     db.init_app(app)
     bootstrap.init_app(app)
