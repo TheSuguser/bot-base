@@ -246,7 +246,6 @@ def qa_config(project_id, bot_id):
         k1=qabot.k1
     )
     if form.validate_on_submit():
-        print(form.k1.data)
         qabot.name = form.name.data 
         qabot.th1 = form.th1.data 
         qabot.th2 = form.th2.data 
