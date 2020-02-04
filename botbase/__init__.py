@@ -12,7 +12,7 @@ from botbase.blueprints.front import front_bp
 from botbase.blueprints.admin import admin_bp
 from botbase.blueprints.project import project_bp
 from botbase.blueprints.bot import bot_bp
-from botbase.extensions import db, bootstrap, login_manager, csrf
+from botbase.extensions import db, bootstrap, login_manager, csrf, migrate
 from botbase.models import User, Role
 
 
@@ -58,6 +58,7 @@ def register_extension(app):
     bootstrap.init_app(app)
     login_manager.init_app(app)
     csrf.init_app(app)
+    migrate.init_app(app,db)
 
 def register_errorhandlers(app):
     # 404
