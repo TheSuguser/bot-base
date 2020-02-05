@@ -79,7 +79,7 @@ class StopWordForm(FlaskForm):
 
 
 class QABotBasicForm(FlaskForm):
-    name = StringField('姓名', validators=[DataRequired(message="请输入机器人姓名")])
+    name = StringField('Bot名称', validators=[DataRequired(message="请输入机器人姓名")])
     th1 = FloatField('肯定回答临界值', validators=[DataRequired(), NumberRange(0,1, message="请输入0-1之间的有效数字") ])
     th2 = th1 = FloatField('多选回答临界值', validators=[DataRequired(), NumberRange(0,1, message="请输入0-1之间的有效数字") ])
     k1 = SelectField(
@@ -91,7 +91,9 @@ class QABotBasicForm(FlaskForm):
     submit = SubmitField('保存')
 
 class ProjectConfigForm(FlaskForm):
-    name = StringField('姓名', validators=[DataRequired(message="请输入机器人姓名")])
+    name = StringField('项目名', validators=[DataRequired(message="请输入机器人姓名")])
     welcome = StringField('欢迎语', validators=[DataRequired(message="请输入机器人欢迎语")])
     unknown = StringField('澄清语', validators=[DataRequired(message="请输入澄清语")])
+    bot_avatar = FileField("机器人头像", validators=[ FileAllowed(['png','jpg','jpeg'])])
+    user_avatar =  FileField("用户头像", validators=[FileAllowed(['png','jpg','jpeg'])])
     submit = SubmitField('保存')

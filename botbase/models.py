@@ -109,6 +109,9 @@ class Project(db.Model):
     create_time = db.Column(db.DateTime, default=datetime.utcnow, index=True)
     user_id = db.Column(db.Integer, db.ForeignKey('user.id'))
 
+    bot_avatar = db.Column(db.String(200), default="default/bot.jpeg")
+    user_avatar = db.Column(db.String(200), default="default/user.jpeg")
+
     welcome = db.Column(db.String(200), default='欢迎使用dbot')
     unknown = db.Column(db.String(200), default='对不起这个问题我暂时无法回答')
 

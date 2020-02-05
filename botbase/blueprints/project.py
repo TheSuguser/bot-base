@@ -1,5 +1,7 @@
+import os
+
 from flask import Blueprint
-from flask import render_template, flash, redirect, url_for, request, current_app, Blueprint, send_from_directory
+from flask import render_template, flash, redirect, url_for, request, current_app, Blueprint, send_from_directory, send_file
 from flask_login import login_required, current_user
 
 from botbase.models import User, Project, Bot
@@ -67,9 +69,32 @@ def config(project_id):
         project.name = form.name.data
         project.welcome = form.welcome.data 
         project.unknown = form.unknown.data 
+        
+        if form.bot_avatar.data:
+            bot_avatar = form.bot_avatar.data
+            ext = os.path.splitext(bot_avatar.filename)[1]
+            filename = os.path.join(current_app.config['AVATAR_PATH'], "bot_{}{}".format(project_id, ext))
+            bot_avatar.save(filename)
+            project.bot_avatar = filename
+        
+        if form.user_avatar.data:
+            user_avatar = form.user_avatar.data
+            ext = os.path.splitext(user_avatar.filename)[1]
+            filename = os.path.join(current_app.config['AVATAR_PATH'], "user_{}{}".format(project_id, ext))
+            user_avatar.save(filename)
+            project.user_avatar = filename
+
         db.session.commit()
         flash('项目设置修改成功', 'success')
         render_template('project/config.html', project_id=project_id, form=form)
     return render_template('project/config.html', project_id=project_id, form=form)
     
+@project_bp.route('<int:project_id>/get_bot_avatar', methods=['GET'])
+def get_bot_avatar(project_id):
+    project = Project.query.get_or_404(project_id)
+    return send_file(os.path.join(current_app.config['AVATAR_PATH'], project.bot_avatar))
 
+@project_bp.route('<int:project_id>/get_user_avatar', methods=['GET'])
+def get_user_avatar(project_id):
+    project = Project.query.get_or_404(project_id)
+    return send_file(os.path.join(current_app.config['AVATAR_PATH'], project.user_avatar))

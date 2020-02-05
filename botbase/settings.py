@@ -1,5 +1,5 @@
 import os
-BASE_DIR = os.path.abspath('')
+BASE_DIR = os.path.abspath(os.path.dirname(os.path.dirname(__file__)))
 
 # 调试信息
 DEBUG = True
@@ -18,6 +18,9 @@ SQLALCHEMY_TRACK_MODIFICATIONS = False
 
 # 上传设置
 MAX_CONTENT_LENGTH = 10 * 1024 * 1024
+AVATAR_PATH = os.path.join(BASE_DIR, "uploads/avatars")
+DEFAULT_BOT_AVATAR_PATH = "uploads/avatars/default/bot.jpeg"
+DEFAULT_USER_AVATAR_PATH =  "uploads/avatars/default/user.jpeg"
 
 
 # 问答集上传设置
