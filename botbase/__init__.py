@@ -12,6 +12,7 @@ from botbase.blueprints.front import front_bp
 from botbase.blueprints.admin import admin_bp
 from botbase.blueprints.project import project_bp
 from botbase.blueprints.bot import bot_bp
+from botbase.blueprints.chat import chat_bp
 from botbase.extensions import db, bootstrap, login_manager, csrf, migrate
 from botbase.models import User, Role
 
@@ -47,6 +48,7 @@ def register_blueprints(app):
     app.register_blueprint(auth_bp, url_prefix='/auth')
     app.register_blueprint(project_bp, url_prefix='/project')
     app.register_blueprint(bot_bp, url_prefix='/bot')
+    app.register_blueprint(chat_bp, url_prefix='/chat')
 
 def register_extension(app):
     db.init_app(app)

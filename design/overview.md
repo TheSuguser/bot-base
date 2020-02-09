@@ -15,3 +15,8 @@ DBot是我们team中最像web应用的一个产品，不以德勤的标准要求
 * 前端方面
   * 聊天界面不支持IE浏览器
   * 配置页面拓展空间几乎接近于无
+  
+
+目前前端页面使用UI Deck的一套模板，涉及到收费问题(16刀的售价)
+https://uideck.com/templates/inspire-bootstrap-4-admin-template/
+

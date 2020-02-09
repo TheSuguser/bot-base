@@ -11,7 +11,7 @@ from botbase.utils.flask_tool import redirect_back
 from botbase.utils.create_bot import create_qa_bot
 from botbase.decorators import admin_required, only_owner_can
 
-project_bp = front_bp = Blueprint('project', __name__)
+project_bp = Blueprint('project', __name__)
 
 @project_bp.route('/<int:project_id>/index')
 @only_owner_can
@@ -98,3 +98,7 @@ def get_bot_avatar(project_id):
 def get_user_avatar(project_id):
     project = Project.query.get_or_404(project_id)
     return send_file(os.path.join(current_app.config['AVATAR_PATH'], project.user_avatar))
+
+@project_bp.route('<int:project_id>/deploy', methods=['GET'])
+def deploy(project_id):
+    return render_template('project/deploy.html',project_id=project_id)
