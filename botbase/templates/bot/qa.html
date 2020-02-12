@@ -1,0 +1,80 @@
+{% extends 'bot/_base.html' %} {%set active="qa"%} {% block content %} {% from 'bootstrap/pagination.html' import render_pagination %}
+<div class="container">
+    <div class="row">
+        <div class="col-lg-1-12">
+            <h1>
+                问答集管理
+            </h1>
+        </div>
+
+    </div>
+</div>
+
+<!-- <div class="container">
+    <div class="row">
+        <div class="col-lg-8">
+        </div>
+        <div class="col-lg-4">
+            <a name="" id="" style="margin:5px" class="btn btn-common" href="{{url_for('bot.add_qa', project_id=project_id, bot_id=bot_id)}}" role="button">
+                + 添加问答对
+            </a>
+            <a name="" id="" class="btn btn-primary" href="#" role="button">从文件中导入</a>
+        </div>
+    </div>
+</div> -->
+
+<div class="container">
+
+    <div class="row">
+        <div class="col-12">
+            <div class="card">
+                <div class="card-header border-bottom">
+                    <a name="" id="" style="margin:5px" class="btn btn-common" href="{{url_for('bot.add_qa', project_id=project_id, bot_id=bot_id)}}" role="button">
+                            + 添加问答对
+                        </a>
+                    <a name="" id="" class="btn btn-primary" href="{{url_for('bot.upload_qa', project_id=project_id, bot_id=bot_id)}}" role="button">从文件中导入</a>
+                    <!-- <a name="" id="" class="btn btn-primary" href="#" role="button">从txt中导入</a> -->
+                </div>
+                <div class="card-body">
+                    <div class="table-responsive">
+                        <table class="table table-striped">
+                            <thead>
+                                <tr>
+                                    <th>id</th>
+                                    <th>问题</th>
+                                    <th>答案</th>
+                                    <th>类别</th>
+                                    <th>操作</th>
+                                </tr>
+                            </thead>
+                            {% for qa in qa_set%} {% if qa.question%}
+                            <tr>
+                                <td scope="row">{{qa.id}}</td>
+                                <td>{{qa.question}}</td>
+                                <td>{{qa.answer}}</td>
+                                <td>{{qa.topic}}</td>
+                                <td>
+                                    <a name="" id="" class="btn btn-info btn-sm " href="{{url_for('bot.edit_qa', project_id=project_id, bot_id=bot_id, qa_id=qa.id)}}" role="button">Edit</a>
+                                    <form class="inline" style="display:inline" method="POST" action="{{url_for('bot.delete_qa', qa_id=qa.id, project_id=project_id, bot_id=bot_id)}}">
+                                        <input type="hidden" name="csrf_token" value="{{ csrf_token()}}" />
+                                        <button type="submit" class="btn btn-danger btn-sm" onclick="return confirm('确定删除该问答对？')">Delete</button>
+                                    </form>
+                                </td>
+                            </tr>
+                            {%endif%} {%endfor%}
+                        </table>
+                        {{render_pagination(pagination)}}
+
+                    </div>
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+</div>
+
+
+
+{% endblock content%}

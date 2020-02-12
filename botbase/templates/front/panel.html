@@ -1,0 +1,51 @@
+{% extends 'front/_base.html' %} {% block title %}项目面板{% endblock %} {% block content %}
+<div class="container-fluid">
+    <div class="breadcrumb-wrapper row">
+        <div class="col-12 col-lg-3 col-md-6">
+            <h4 class="page-title">项目列表</h4>
+        </div>
+        <!-- <div class="col-12 col-lg-9 col-md-6">
+            <ol class="breadcrumb float-right">
+                <li><a href="index.html">机器人管理</a></li>
+                <li class="active"> / 机器人列表</li>
+            </ol>
+        </div> -->
+    </div>
+    <div class="container-fluid">
+        <div class="row">
+            {% if projects %} {% for project in projects %}
+            <div class="col-md-12 col-xl-4">
+                <div class="card h-100">
+                    <div class="card-body">
+                        <a href="{{url_for('project.index', project_id=project.id)}}">
+                            <h5 class="card-title">{{project.name}}</h5>
+                            <p class="card-text">{{project.area}}</p>
+                        </a>
+
+                        <a>
+                            <form style="display: inline;" class="inline" method="POST" action="{{url_for('front.delete_project',project_id=project.id)}}">
+                                <input type="hidden" name="csrf_token" value="{{ csrf_token()}}" />
+                                <button type="submit" class="btn btn-danger btn-sm float-right" onclick="return confirm('确定删除该项目？（删除后所有数据将会清空）')">Delete</button>
+                            </form>
+                        </a>
+
+                    </div>
+                </div>
+            </div>
+            {%endfor%} {%endif %}
+            <div class="col-md-12 col-xl-4">
+                <div class="card h-100">
+                    <div class="card-body">
+                        <a href="{{url_for('front.create_project')}}">
+
+                            <h5 class="card-title"> + </h5>
+                            <p class="card-text">新建项目</p>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+{% endblock content%}

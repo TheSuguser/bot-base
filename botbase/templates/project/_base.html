@@ -1,0 +1,84 @@
+{% extends 'base.html' %} {% block sidebar %}
+<div class="side-nav expand-lg">
+    <div class="side-nav-inner">
+        <ul class="side-nav-menu">
+            <li class="side-nav-header">
+                <a href="{{url_for('front.panel')}}">
+                    <i class="lni-chevron-left"></i>
+                    <span>返回项目列表 </span>
+                </a>
+
+            </li>
+            <li class="nav-item dropdown open">
+                <a href="#" class="dropdown-toggle">
+                    <span class="icon-holder">
+            <i class="lni-dashboard"></i>
+        </span>
+                    <span class="title">机器人管理</span>
+                    <span class="arrow">
+            <i class="lni-chevron-right"></i>
+        </span>
+                </a>
+                <ul class="dropdown-menu sub-down">
+                    <li class="active">
+                        <a href="{{url_for('project.index', project_id=project_id)}}">机器人列表</a>
+                    </li>
+                    <li>
+                        <a href="{{url_for('project.create_bot', project_id=project_id)}}">新建机器人</a>
+                    </li>
+                </ul>
+            </li>
+            <li class="nav-item dropdown">
+                <a class="dropdown-toggle" href="#">
+                    <span class="icon-holder">
+            <i class="lni-layout"></i>
+        </span>
+                    <span class="title">Dashboard</span>
+                    <span class="arrow">
+            <i class="lni-chevron-right"></i>
+        </span>
+                </a>
+                <ul class="dropdown-menu sub-down">
+                    <li>
+                        <a href="email.html">Dashboard1</a>
+                    </li>
+                </ul>
+            </li>
+            <li class="nav-item dropdown">
+                <a class="dropdown-toggle" href="#">
+                    <span class="icon-holder">
+            <i class="lni-paint-roller"></i>
+        </span>
+                    <span class="title">项目设置</span>
+                    <span class="arrow">
+            <i class="lni-chevron-right"></i>
+        </span>
+                </a>
+                <ul class="dropdown-menu sub-down">
+                    <li>
+                        <a href="{{url_for('project.config',project_id=project_id)}}">基本设置</a>
+                    </li>
+                </ul>
+            </li>
+            <li class="nav-item dropdown">
+                <a class="dropdown-toggle" href="#">
+                    <span class="icon-holder">
+            <i class="lni-eye"></i>
+        </span>
+                    <span class="title">发布</span>
+                    <span class="arrow">
+            <i class="lni-chevron-right"></i>
+        </span>
+                </a>
+                <ul class="dropdown-menu sub-down">
+                    <li>
+                        <a href="{{url_for('project.deploy', project_id=project_id)}}">测试链接</a>
+                    </li>
+                </ul>
+            </li>
+
+
+        </ul>
+    </div>
+</div>
+{%endblock%}

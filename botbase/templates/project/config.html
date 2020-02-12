@@ -1,0 +1,43 @@
+{% extends 'project/_base.html' %} {% from 'bootstrap/form.html' import render_form %} {% block title %}项目基本参数{% endblock %} {% block content %}
+<div class="container">
+    <div class="row">
+        <div class="col-lg-1-12">
+            <h1>
+                项目参数设置
+            </h1>
+        </div>
+
+    </div>
+</div>
+<div class="container">
+
+    <div class="row">
+        <div class="col-8">
+            <div class="card h-100">
+                <div class="card-body">
+                    {{ render_form(form, extra_classes='col-6') }}
+                </div>
+
+            </div>
+
+        </div>
+        <div class="col-lg-4">
+            <div class="card h-100">
+                <div class="card-body">
+                    <h4>
+                        当前机器人头像
+                    </h4>
+                    <img src="{{url_for('project.get_bot_avatar', project_id=project_id)}}" class="img-fluid" width="40px" alt="">
+                    <h4>
+                        当前用户头像
+                    </h4>
+                    <img src="{{url_for('project.get_user_avatar', project_id=project_id)}}" class="img-fluid" width="40px" alt="">
+
+                </div>
+
+            </div>
+        </div>
+
+    </div>
+</div>
+{% endblock%}

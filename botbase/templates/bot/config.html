@@ -1,0 +1,26 @@
+{% extends 'bot/_base.html' %}{%set active="config"%} {% from 'bootstrap/form.html' import render_form %} {% block title %}修改问答对{% endblock %} {% block content %}
+<div class="container">
+    <div class="row">
+        <div class="col-lg-1-12">
+            <h1>
+                机器人参数设置
+            </h1>
+        </div>
+
+    </div>
+</div>
+<div class="container">
+    <div class="row">
+        <div class="col-12">
+            <div class="card">
+                <div class="card-body">
+                    {{ render_form(form, extra_classes='col-6') }}
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+</div>
+{% endblock%}

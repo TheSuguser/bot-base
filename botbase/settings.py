@@ -1,0 +1,39 @@
+import os
+BASE_DIR = os.path.abspath(os.path.dirname(os.path.dirname(__file__)))
+
+# 调试信息
+DEBUG = True
+PORT = 5003
+
+# Secure key
+SECRET_KEY = 'botbasetest'
+ADMIN_EMAIL = ["joezheng@deloitte.com.cn"]
+
+# mysql设置
+#格式为mysql+pymysql://数据库用户名:密码@数据库地址:端口号/数据库的名字?数据库格式
+#SQLALCHEMY_DATABASE_URI = 'mysql+pymysql://root:dai@localhost:3307/flasktest?charset=utf8'
+#如果你不打算使用mysql，使用这个连接sqlite也可以
+SQLALCHEMY_DATABASE_URI = 'sqlite:///' + os.path.join(BASE_DIR,'app.db')
+SQLALCHEMY_TRACK_MODIFICATIONS = False
+
+# 上传设置
+MAX_CONTENT_LENGTH = 10 * 1024 * 1024
+AVATAR_PATH = os.path.join(BASE_DIR, "uploads/avatars")
+DEFAULT_BOT_AVATAR_PATH = "uploads/avatars/default/bot.jpeg"
+DEFAULT_USER_AVATAR_PATH =  "uploads/avatars/default/user.jpeg"
+
+
+# 问答集上传设置
+QA_PER_PAGE = 10
+
+# QA机器人设置
+K1 = 5
+TH1 = 0.95
+TH2 = 0.7
+
+# Logging配置
+LOG_PATH = "logs/botbase.log"
+LOG_MAX_BYTES = 10 * 1024 * 1024
+LOG_BACKUP_COUNT = 10
+
+
